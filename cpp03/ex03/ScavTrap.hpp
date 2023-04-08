@@ -6,11 +6,14 @@
 class ScavTrap : public ClapTrap
 {
  private:
-        std::string name;
-protected: 
-        static int hit_points;
-	static int energy_points;
-	static int attack_damage;
+
+    std::string name;
+	static const int init_hp;
+	static const int init_ep;
+	static const int init_ad;
+	int hit_points;
+	int energy_points;
+	int attack_damage;
 public:
         ScavTrap(std::string name);
         ScavTrap(const ScavTrap& copy);
@@ -18,11 +21,16 @@ public:
         ~ScavTrap();
 
         void guardGate();
-        virtual int get_hit_points();
-	virtual  int get_energy_points();
-	virtual  std::string get_name() const ;
-	virtual  int get_attack_damage();
-	virtual  void showInfo();
+
+        int get_hit_points();
+	int get_energy_points();
+	std::string get_name() const ;
+	int get_attack_damage();
+	void showInfo();
+
+	static int get_init_hp();
+	static int get_init_ep();
+	static int get_init_ad();
 
 };
 

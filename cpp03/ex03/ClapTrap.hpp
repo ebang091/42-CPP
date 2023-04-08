@@ -8,9 +8,13 @@ class ClapTrap
 {
 private:
 		std::string name;
-		static int hit_points;
-		static int energy_points;
-		static int attack_damage;
+		static const int init_hp;
+		static const int init_ep;
+		static const int init_ad;
+
+		int hit_points;
+		int energy_points;
+		int attack_damage;
 public:
 		ClapTrap(std::string name);
 		ClapTrap(const ClapTrap& claptrap);
@@ -23,9 +27,13 @@ public:
 
 		int get_hit_points();
 		int get_energy_points();
-		std::string get_name() const ;
 		int get_attack_damage();
 		void showInfo();
+
+	 	std::string get_name();
+		static int get_init_hp();
+		static int get_init_ep();
+		static int get_init_ad();
 };
 
 #endif // ClapTrap_HPP

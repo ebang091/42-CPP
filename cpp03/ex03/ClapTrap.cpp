@@ -1,15 +1,19 @@
 #include "ClapTrap.hpp"
- int ClapTrap::hit_points = 10;
- int ClapTrap::energy_points = 10;
- int attack_damage = 0;
+ const int ClapTrap::init_hp = 10;
+ const int ClapTrap::init_ep = 10;
+ const int ClapTrap::init_ad = 0;
 
 ClapTrap::ClapTrap(std::string name)
-:name(name) {std::cout << "construnctor called : [" << name << "]  created.\n";}
+:name(name), hit_points(init_hp), energy_points(init_ep), attack_damage(init_ad)
+ {std::cout << "construnctor called : [" << name << "]  created.\n";}
 
 ClapTrap::ClapTrap(const ClapTrap& copy)
 :name(copy.name)
 {
 	std::cout << "copy constructor called : " << copy.name << "copied.\n";
+	this->hit_points = copy.hit_points;
+	this->energy_points = copy.energy_points;
+	this->attack_damage = copy.attack_damage;
 }
 
 ClapTrap& ClapTrap::operator=(const ClapTrap& copy)
@@ -76,7 +80,7 @@ int ClapTrap::get_energy_points()
 	return energy_points;
 }
 
-std::string ClapTrap::get_name() const
+std::string ClapTrap::get_name()
 {
 	return this->name;
 }
@@ -84,4 +88,19 @@ std::string ClapTrap::get_name() const
 void ClapTrap::showInfo()
 {
 	std::cout << "ClapTrap name : " << name << " " << " hit point : " << hit_points << " " << "energy points : " << energy_points << " " << "attack_damage : " << attack_damage << "\n";
+}
+
+int ClapTrap::get_init_hp()
+{
+	return init_hp;
+}
+
+int ClapTrap::get_init_ep()
+{
+	return init_ep;
+}
+
+int ClapTrap::get_init_ad()
+{
+	return init_ad;
 }

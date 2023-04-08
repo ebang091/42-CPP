@@ -6,25 +6,33 @@
 
 class FragTrap : public ClapTrap
 {
-private: 
+private:
         std::string name;
-protected:
-	static int hit_points;
-	static int energy_points;
-	static int attack_damage;
+		static const int init_hp;
+		static const int init_ep;
+		static const int init_ad;
+
+		int hit_points;
+		int energy_points;
+		int attack_damage;
+        
 public:
         FragTrap(std::string name);
-        FragTrap(const FragTrap& FragTrap);
-        FragTrap& operator=(const FragTrap& FragTrap);
+        FragTrap(const FragTrap& copy);
+        FragTrap& operator=(const FragTrap& copy);
         ~FragTrap();
 
         void highFiveGuys(void);
 
-        virtual int get_hit_points();
-	virtual int get_energy_points();
-	virtual std::string get_name() const ;
-	virtual int get_attack_damage();
-	virtual void showInfo();
+		int get_hit_points();
+		int get_energy_points();
+		std::string get_name() const ;
+		int get_attack_damage();
+		void showInfo();
+
+		static int get_init_hp();
+		static int get_init_ep();
+		static int get_init_ad();
 
 };
 

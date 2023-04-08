@@ -5,15 +5,17 @@
 #include "ScavTrap.hpp"
 #include "FragTrap.hpp"
 
-class DiamondTrap : public ScavTrap, public ClapTrap
+class DiamondTrap : public ScavTrap, public FragTrap
 {
 private:
         std::string name;
-        ClapTrap::name;
-        static int hit_points;
-	static int energy_points;
-	static int attack_damage;
+        static const int init_hp;
+	static const int init_ep;
+	static const int init_ad;
 
+        int hit_points;
+	int energy_points;
+	int attack_damage;
 public:
         DiamondTrap(std::string name);
         DiamondTrap(const DiamondTrap& DiamondTrap);
