@@ -7,16 +7,21 @@
 class ClapTrap
 {
 private:
-		std::string name;
-		static const int init_hp;
-		static const int init_ep;
-		static const int init_ad;
-
 		int hit_points;
 		int energy_points;
 		int attack_damage;
+		std::string name;
+		
+protected:
+	enum{
+		INIT_HP = 10,
+		INIT_EP = 10,
+		INIT_AD = 0
+	};
+
 public:
 		ClapTrap(std::string name);
+		ClapTrap(std::string name, int hp, int ep, int ad);
 		ClapTrap(const ClapTrap& claptrap);
 		ClapTrap& operator=(const ClapTrap& copy);
 		~ClapTrap();
@@ -31,9 +36,6 @@ public:
 		void showInfo();
 
 	 	std::string get_name();
-		static int get_init_hp();
-		static int get_init_ep();
-		static int get_init_ad();
 };
 
 #endif // ClapTrap_HPP

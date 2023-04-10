@@ -1,12 +1,12 @@
 #include "ClapTrap.hpp"
- const int ClapTrap::init_hp = 10;
- const int ClapTrap::init_ep = 10;
- const int ClapTrap::init_ad = 0;
 
 ClapTrap::ClapTrap(std::string name)
-:name(name), hit_points(init_hp), energy_points(init_ep), attack_damage(init_ad)
+:name(name), hit_points(INIT_HP), energy_points(INIT_EP), attack_damage(INIT_AD)
  {std::cout << "construnctor called : [" << name << "]  created.\n";}
 
+ClapTrap::ClapTrap(std::string name, int hp, int ep, int ad)
+:name(name),hit_points(hp), energy_points(ep), attack_damage(ad)
+{}
 ClapTrap::ClapTrap(const ClapTrap& copy)
 :name(copy.name)
 {
@@ -88,19 +88,4 @@ std::string ClapTrap::get_name()
 void ClapTrap::showInfo()
 {
 	std::cout << "ClapTrap name : " << name << " " << " hit point : " << hit_points << " " << "energy points : " << energy_points << " " << "attack_damage : " << attack_damage << "\n";
-}
-
-int ClapTrap::get_init_hp()
-{
-	return init_hp;
-}
-
-int ClapTrap::get_init_ep()
-{
-	return init_ep;
-}
-
-int ClapTrap::get_init_ad()
-{
-	return init_ad;
 }
