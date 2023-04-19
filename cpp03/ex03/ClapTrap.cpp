@@ -2,15 +2,15 @@
 
 ClapTrap::ClapTrap(std::string name)
 :name(name), hit_points(INIT_HP), energy_points(INIT_EP), attack_damage(INIT_AD)
- {std::cout << "construnctor called : [" << name << "]  created.\n";}
+ {std::cout << "ClapTrap construnctor called : [" << name << "]  created.\n";}
 
 ClapTrap::ClapTrap(std::string name, int hp, int ep, int ad)
-:name(name),hit_points(hp), energy_points(ep), attack_damage(ad)
+:name(name), hit_points(hp), energy_points(ep), attack_damage(ad)
 {}
 ClapTrap::ClapTrap(const ClapTrap& copy)
 :name(copy.name)
 {
-	std::cout << "copy constructor called : " << copy.name << "copied.\n";
+	std::cout << "ClapTrap copy constructor called : " << copy.name << "copied.\n";
 	this->hit_points = copy.hit_points;
 	this->energy_points = copy.energy_points;
 	this->attack_damage = copy.attack_damage;
@@ -18,7 +18,7 @@ ClapTrap::ClapTrap(const ClapTrap& copy)
 
 ClapTrap& ClapTrap::operator=(const ClapTrap& copy)
 {
-	std::cout << "copy operator called.\n";
+	std::cout << "ClapTrap copy operator called.\n";
 	this->name = copy.name;
 	this->hit_points = copy.hit_points;
 	this->energy_points = copy.energy_points;
@@ -27,7 +27,7 @@ ClapTrap& ClapTrap::operator=(const ClapTrap& copy)
 }
 
 ClapTrap::~ClapTrap()
-{ std:: cout << "Default destructor called.\n" ;}
+{ std:: cout << "ClapTrap Default destructor called.\n" ;}
 
 void ClapTrap::attack(const std::string &target)
 {

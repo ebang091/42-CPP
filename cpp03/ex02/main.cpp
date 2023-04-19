@@ -35,15 +35,13 @@ int main()
 		ft1.showInfo();
 		st1.showInfo();
 
-		st1.attack(ft1.get_ft_name());
+		st1.attack(ft1.ClapTrap::get_name());
 		ft1.takeDamage(st1.get_attack_damage());
 
 		ft1.highFiveGuys();
-
 		
 		st1.~ScavTrap();
 		ft1.showInfo(); 
-
-
+		st1.showInfo();
 	}
 }
