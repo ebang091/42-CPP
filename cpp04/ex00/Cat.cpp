@@ -29,4 +29,3 @@ void Cat::makeSound()const
 {
 	std::cout << "Meow~\n";
 }
-

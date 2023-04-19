@@ -7,7 +7,7 @@
 class Cat : public Animal
 {
 private:
-		/* data */
+		
 public:
 		Cat();
 		Cat(const Cat& copy);

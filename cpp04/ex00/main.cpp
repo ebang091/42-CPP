@@ -18,7 +18,7 @@ int main()
 		meta->makeSound();
 	}
 	{
-		WrongCat *wcat = new WrongCat();
-		wcat->makeSound();	
+		WrongCat wcat = WrongCat();
+		wcat.makeSound();	
 	}
 }
