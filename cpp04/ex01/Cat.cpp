@@ -12,7 +12,7 @@ Cat::Cat(const Cat& copy)
 :Animal()
 {
 	this->type = copy.type;
-	this->brain = new Brain;
+	this->brain = new Brain();
 	for(int i = 0; i < copy.brain->getNum(); i++)
 		this->brain->setIdea(copy.getIdea(i));
 	std::cout << "Cat copy constructor called\n";
@@ -22,6 +22,10 @@ Cat::Cat(const Cat& copy)
 Cat& Cat::operator=(const Cat& copy)
 {
 	this->type = copy.type;
+	this->brain = new Brain();
+	for(int i = 0; i < copy.brain->getNum(); i++)
+		this->brain->setIdea(copy.brain->getIdea(i));
+
 	std::cout << "Cat copy operator called\n";
 	return *this;
 }

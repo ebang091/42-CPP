@@ -20,6 +20,7 @@ int main()
 		delete i;
 	}
 	{
+
 		//Cat, Dog 절반, new로 생성하는 것과 소멸자에서 Brain delete하는 것 확인
 		std::cout << "\n\ntest 2\n";
 		const int NUM_ANIMALS = 6;
@@ -40,7 +41,7 @@ int main()
 		}
 	}
 	{
-		//깊은 복사 확인
+		//복사 연산자 - 깊은 복사 확인
 		std::cout << "\n\ntest 3\n\n";
 		Cat cat1;
 		Cat cat2;
@@ -51,12 +52,14 @@ int main()
 		cat2.showIdeas();
 	}
 	{
+		//복사 생성자
 		std::cout <<"\n\ntest4\n\n";
 		Cat cat1;
 		cat1.setIdea("wow!");
 		Cat cat3 = cat1;
+		cat1.showIdeas();
 		cat3.showIdeas();
 	}
 
-	atexit(check);
+	// atexit(check);
 }

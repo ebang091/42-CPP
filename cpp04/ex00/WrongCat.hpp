@@ -12,9 +12,6 @@ public:
 		WrongCat(const WrongCat& copy);
 		WrongCat& operator=(const WrongCat& copy);
 		~WrongCat();
-
-		
-
 };
 
 #endif // WrongCat_HPP

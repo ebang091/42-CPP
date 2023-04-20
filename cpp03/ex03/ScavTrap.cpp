@@ -21,7 +21,9 @@ ScavTrap& ScavTrap::operator=(const ScavTrap& copy)
 }
 
 ScavTrap::~ScavTrap()
-{}
+{
+    std::cout << "ScavTrap default constructor called.\n";
+}
 
 void ScavTrap::guardGate()
 {

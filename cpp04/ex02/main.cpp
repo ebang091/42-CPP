@@ -25,5 +25,5 @@ int main()
 
 	}
 
-	atexit(check);
+	// atexit(check);
 }

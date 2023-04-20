@@ -74,7 +74,7 @@ bool	Fixed::operator < (const Fixed &fixed)const
 
 bool Fixed::operator >= (const Fixed &fixed)const
 {
-	return (this->getRawBits() == fixed.getRawBits());
+	return (this->getRawBits() >= fixed.getRawBits());
 }
 
 bool Fixed::operator <= (const Fixed &fixed)const

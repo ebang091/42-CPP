@@ -7,7 +7,6 @@ Dog::Dog()
 	std::cout << "Dog default constructor called\n";
 }
 
-
 Dog::Dog(const Dog&  copy)
 :Animal()
 {

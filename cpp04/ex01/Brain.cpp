@@ -9,7 +9,7 @@ Brain::Brain()
 Brain::Brain(const Brain&  copy)
 {
 	std::cout << "Brain copy constructor called.\n";
-	for(int i = 0; i < num; i++)
+	for(int i = 0; i < this->num; i++)
 		this->ideas[i] = copy.ideas[i].substr();
 }
 
