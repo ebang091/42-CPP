@@ -1,15 +1,17 @@
 #include "Animal.hpp"
 
 Animal::Animal()
-{ std::cout << "Animal default constructor called\n";}
+{
+	std::cout << "Animal default constructor called\n";
+}
 
-Animal::Animal(const Animal& copy)
+Animal::Animal(const Animal &copy)
 {
 	this->type = copy.type;
 	std::cout << "Animal copy constructor called\n";
 }
 
-Animal& Animal::operator=(const Animal& copy)
+Animal &Animal::operator=(const Animal &copy)
 {
 	this->type = copy.type;
 	std::cout << "Animal copy operator called\n";

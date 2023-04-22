@@ -1,29 +1,36 @@
 #include "Dog.hpp"
 
 Dog::Dog()
-:Animal()
+	: Animal()
 {
 	this->type = "Dog";
 	this->brain = new Brain();
 	std::cout << "Dog default constructor called\n";
 }
 
-
-Dog::Dog(const Dog&  copy)
-:Animal()  
+Dog::Dog(const Dog &copy)
+	: Animal()
 {
 	this->type = copy.type;
 	this->brain = new Brain;
-	for(int i = 0; i < copy.brain->getNum(); i++)
+	for (int i = 0; i < copy.brain->getNum(); i++)
 		this->brain[i] = copy.brain[i];
 
 	std::cout << "Dog copy constructor called\n";
 }
 
-Dog& Dog::operator=(const Dog& copy)
+Dog &Dog::operator=(const Dog &copy)
 {
-	this->type = copy.type.substr(0);
 	std::cout << "Dog copy operator called\n";
+	if (this != &copy)
+	{
+		if (this->brain != NULL)
+			delete this->brain;
+		this->type = copy.type;
+		this->brain = new Brain();
+		for (int i = 0; i < copy.brain->getNum(); i++)
+			this->brain->setIdea(copy.brain->getIdea(i));
+	}
 	return *this;
 }
 
@@ -40,10 +47,10 @@ void Dog::makeSound() const
 
 void Dog::setIdea(std::string idea)
 {
-	if(this->brain->getNum() < 100)
+	if (this->brain->getNum() < 100)
 	{
 		this->brain->setIdea("Dog's idea : " + idea.substr(0));
-		this->brain->numIncrease() ;
+		this->brain->numIncrease();
 	}
 }
 
@@ -55,5 +62,5 @@ std::string Dog::getIdea(int num) const
 void Dog::showIdeas() const
 {
 	this->brain->showIdeas();
-	return ;
+	return;
 }

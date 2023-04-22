@@ -2,7 +2,6 @@
 #include "Dog.hpp"
 #include "Brain.hpp"
 
-
 void check()
 {
 	system("leaks AnimalBrain");
@@ -10,19 +9,30 @@ void check()
 
 int main()
 {
-
 	{
-		Cat cat1;
-		cat1.setIdea("hi I'm cat 1.");
-		cat1.setIdea("hello.");
-		cat1.showIdeas();
+		Animal *Aptr = new Cat();
+		Animal *Aptr2 = new Dog();
+
+		Aptr->makeSound();
+		Aptr2->makeSound();
+		std::cout << std::endl;
+		delete Aptr;
+		delete Aptr2;
 	}
 	{
-		Dog dog1;
-		dog1.setIdea("hi I'm dog1.");
-		dog1.setIdea("hello.");
-		dog1.showIdeas();
+		std::cout << std::endl;
+		std::cout << "\n\ntest2\n\n";
+		Dog *Dptr = new Dog();
+		Cat *Cptr = new Cat();
+		Dptr->makeSound();
+		Cptr->makeSound();
 
+		std::cout << std::endl;
+
+		delete Dptr;
+		delete Cptr;
+	}
+	{
 	}
 
 	// atexit(check);
