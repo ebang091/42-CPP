@@ -1,41 +1,51 @@
 #include "ScavTrap.hpp"
 
 ScavTrap::ScavTrap(std::string name)
-:ClapTrap(name)
+:ClapTrap(name, INIT_HP, INIT_EP, INIT_AD )
 {
     std::cout << "ScavTrap constructor called\n";
-    set_hit_points(100), set_energy_points(50), set_attack_damage(20);
 }
 
-ScavTrap::ScavTrap(const ScavTrap& ScavTrap) : ClapTrap(ScavTrap.get_st_name())
+ScavTrap::ScavTrap(const ScavTrap& copy)
+:ClapTrap(copy.name, copy.hit_points, copy.energy_points, copy.attack_damage)
 {
-    std::cout << "ScavTrap copy 'constructor' called\n";
-    this->set_attack_damage(get_attack_damage());
-    this->set_energy_points(get_energy_points());
-    this->set_hit_points(get_hit_points());
-    
-    *this = ScavTrap;
+    std::cout << "ScavTrap copy 'constructor' called\n";  
 }
 
 ScavTrap& ScavTrap::operator=(const ScavTrap& copy)
 {
+    this->hit_points = copy.hit_points;
+    this->energy_points = copy.energy_points;
+    this->attack_damage = copy.attack_damage;
     std::cout << "ScavTrap copy 'operator' called\n";
-    this->set_hit_points(get_hit_points());
-    this->set_attack_damage(get_attack_damage());
-    this->set_energy_points(get_energy_points());
-    this->set_name(copy.get_st_name());
     return *this;
 }
 
 ScavTrap::~ScavTrap()
-{}
+{
+    std::cout << "ScavTrap default destructor called." << std::endl;
+}
 
 void ScavTrap::guardGate()
 {
-    std::cout << "ScavTrap " << get_name() << " is now on Gate keeper mode.\n";
+    std::cout << "ScavTrap " << this->name << " is now on Gate keeper mode.\n";
 }
 
-std::string ScavTrap::get_st_name() const
+void ScavTrap::attack(const std::string &target)
 {
-    return get_name();
+    if (this->energy_points > 0  && this->hit_points > 0)
+    {
+        std::cout << "ScavTrap "  << this->name << " attacks " << target << " causing " << this->attack_damage << " points of damage." << std::endl;
+        this->energy_points--;
+    }
+    else
+    {
+        std::cout << "ScavTrap " << this->name << " couldn't attack : no energy!\n";   
+    }
+
+}
+
+void ScavTrap::showInfo() const
+{
+    std::cout << "ScavTrap name " << this->name << " hit points : [" << this->hit_points <<"] energy_points: [" << this->energy_points << "] attack_damage : [" << this->attack_damage << "] "<<std::endl;
 }

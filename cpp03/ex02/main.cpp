@@ -4,44 +4,33 @@
 int main()
 {
 	{
-		// ClapTrap ct1("ebang");
-		// ClapTrap ct2("seongmik");
-
-		// ct1.showInfo();
-		// ct2.showInfo();
-		// ct1.beRepaired(5);
-		// ct1.attack(ct2.get_name());
-		// ct2.takeDamage(ct1.get_attack_damage());
-
-		// ct1.set_attack_damage(10);
-		// ct1.attack(ct2.get_name());
-		// ct2.takeDamage(ct1.get_attack_damage());
-	
-		// ct1.showInfo();
-		// ct2.showInfo();
-		// ScavTrap st1("yejinam");
-		// st1.showInfo();
-		// st1.attack(ct1.get_name());
-		// ct1.takeDamage(st1.get_attack_damage());
-		// st1.guardGate();		
-
-		// ct1.showInfo();
-		// ct2.showInfo();
-		// st1.showInfo();
+		ClapTrap *trap1 = new FragTrap("Frag");
+		trap1->attack("First");
+		trap1->showInfo();
+		trap1->takeDamage(100);
+		trap1->showInfo();
+		trap1->attack("Second");
+		delete trap1;
 	}
 	{
-		FragTrap ft1("seoyoo");
-		ScavTrap st1("yejinam");
-		ft1.showInfo();
-		st1.showInfo();
+		std::cout << std::endl << std::endl;
+		FragTrap trap1("Frag1");
+		ScavTrap trap2("Scav");
+		FragTrap trap3("Frag2");
+		trap2.attack(trap3.get_name());
+		trap3.takeDamage(100);
+		trap2.showInfo();
+		trap3.showInfo();
 
-		st1.attack(ft1.ClapTrap::get_name());
-		ft1.takeDamage(st1.get_attack_damage());
+		std::cout << "\n\n\nCopy operator test " << std::endl;
+		trap1 = trap3;
+		trap2.showInfo();
+		std::cout << "\n\n\nCopy constructor test " << std::endl;
 
-		ft1.highFiveGuys();
+		FragTrap trap4(trap3);
+		trap4.showInfo();
 		
-		st1.~ScavTrap();
-		ft1.showInfo(); 
-		st1.showInfo();
 	}
+
 }
+	

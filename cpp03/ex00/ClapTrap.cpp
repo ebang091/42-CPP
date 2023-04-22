@@ -20,11 +20,13 @@ ClapTrap& ClapTrap::operator=(const ClapTrap& copy)
 }
 
 ClapTrap::~ClapTrap()
-{ std:: cout << "Default destructor called.\n" ;}
+{ 
+	std:: cout << "ClapTrap Default destructor called.\n" ;
+}
 
 void ClapTrap::attack(const std::string &target)
 {
-	if(this->energy_points > 0)
+	if(this->energy_points > 0 && this->hit_points > 0)
 	{
 		std::cout << "ClapTrap " << this->name << " attacks " << target << ": causing [ " << attack_damage <<" ]" << "points of damage!\n";
 		this->energy_points--;
@@ -46,10 +48,10 @@ void ClapTrap::takeDamage(unsigned int amount)
 
 void ClapTrap::beRepaired(unsigned int amount)
 {
-	if (this->energy_points > 0)
+	if (this->energy_points > 0 && this->hit_points > 0)
 	{
 		std::cout << "ClapTrap " << this->name << " got repaired : " << "hit point increased to [ " << this->hit_points + amount << " ]!\n";
-		this->energy_points-= amount;
+		this->energy_points--;
 		this->hit_points = this->hit_points + amount;
 	}
 	else
@@ -63,17 +65,13 @@ int ClapTrap::get_attack_damage()
 	return this->attack_damage;
 }
 
-int ClapTrap::get_hit_points()
-{
-	return this->hit_points;
-}
 
-std::string &ClapTrap::get_name()
+std::string ClapTrap::get_name()
 {
 	return this->name;
 }
 
-void ClapTrap::set_attack_damage(int amount)
+void ClapTrap::showInfo()
 {
-	this->attack_damage = amount;
+		std::cout << "ClapTrap name : " << name << " " << " hit point : " << hit_points << " " << "energy points : " << energy_points << " " << "attack_damage : " << attack_damage << "\n";
 }

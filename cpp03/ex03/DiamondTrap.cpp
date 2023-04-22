@@ -15,3 +15,8 @@ void DiamondTrap::whoAmI()
     std::cout <<"I am both ScavTrap and FragTrap, I am " << name << " and both " << ClapTrap::get_name() <<".\n";
 }
 
+void DiamondTrap::attack()
+{
+    ScavTrap::attack();
+}
+

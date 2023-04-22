@@ -7,11 +7,6 @@
 class FragTrap : virtual public ClapTrap
 {
 private:
-        std::string name;
-		int hit_points;
-		int energy_points;
-		int attack_damage;
-
 protected: 
 enum{
 	INIT_HP = 100,

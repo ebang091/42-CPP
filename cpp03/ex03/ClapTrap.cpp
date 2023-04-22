@@ -2,7 +2,9 @@
 
 ClapTrap::ClapTrap(std::string name)
 :name(name), hit_points(INIT_HP), energy_points(INIT_EP), attack_damage(INIT_AD)
- {std::cout << "ClapTrap construnctor called : [" << name << "]  created.\n";}
+ {
+	std::cout << "ClapTrap construnctor called : [" << name << "]  created.\n";
+}
 
 ClapTrap::ClapTrap(std::string name, int hp, int ep, int ad)
 :name(name), hit_points(hp), energy_points(ep), attack_damage(ad)

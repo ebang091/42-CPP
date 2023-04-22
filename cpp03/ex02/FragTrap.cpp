@@ -1,32 +1,45 @@
 #include "FragTrap.hpp"
 
-FragTrap::FragTrap(std::string name)
-:ClapTrap(name)
+FragTrap::FragTrap(std::string name) :ClapTrap(name, INIT_HP, INIT_EP, INIT_AD)
 {
-    std::cout << "Fraptrap constructor called.\n";
-    set_hit_points(100), set_energy_points(100), set_attack_damage(30);
+    std::cout << "FragTrap constructor called." << std::endl;
 }
 
-FragTrap::FragTrap(const FragTrap& FragTrap) : ClapTrap(FragTrap.ClapTrap::get_name())
+FragTrap::FragTrap(const FragTrap& copy)
+:ClapTrap(copy.name, copy.hit_points, copy.energy_points, copy.attack_damage)
 {
-    std::cout << "Fraptrap copy constructor called.\n";
-    *this = FragTrap;
+    std::cout << "FragTrap copy constructor called." << std::endl;
 }
 
-FragTrap& FragTrap::operator=(const FragTrap& FragTrap)
+FragTrap& FragTrap::operator=(const FragTrap& copy)
 {
-    std::cout << "Fraptrap copy operator called.\n";
-     this->set_attack_damage(get_attack_damage());
-    this->set_energy_points(get_energy_points());
-    this->set_hit_points(get_hit_points());
-    this->set_name(FragTrap.ClapTrap::get_name());
+    std::cout << "FragTrap copy operator called." << std::endl;
+    this->hit_points = copy.hit_points;
+    this->energy_points = copy.energy_points;
+    this->attack_damage = copy.attack_damage;
     return *this;
 }
 
 FragTrap::~FragTrap()
-{}
-
-void FragTrap::highFiveGuys()
 {
-    std::cout << "[ " << get_name() << " ] : " << "let's highfive guys!\n";
+     std::cout << "FragTrap destructor called." << std::endl;
 }
+
+void FragTrap::attack(const std::string &target)
+{
+    if (this->energy_points > 0  && this->hit_points > 0)
+    {
+        std::cout << "FragTrap "  << this->name << " attacks " << target << " causing " << this->attack_damage << " points of damage." << std::endl;
+        this->energy_points--;
+    }
+    else
+    {
+        std::cout << "FragTrap " << this->name << " couldn't attack : no energy!\n";   
+    }
+}
+
+void FragTrap::showInfo() const
+{
+    std::cout << "FragTrap name " << this->name << " hit points : [" << this->hit_points <<"] energy_points: [" << this->energy_points << "] attack_damage : [" << this->attack_damage << "] "<<std::endl;
+}
+

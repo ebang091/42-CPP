@@ -3,29 +3,51 @@
 int main()
 {
 	{
-		ClapTrap ct1("ebang");
-		ClapTrap ct2("seongmik");
 
-		// ct1.showInfo();
-		// ct2.showInfo();
-		// ct1.beRepaired(5);
-		// ct1.attack(ct2.get_name());
-		// ct2.takeDamage(ct1.get_attack_damage());
+		ScavTrap trap1("First");
+		ScavTrap trap2("Second");
 
-		// ct1.set_attack_damage(10);
-		// ct1.attack(ct2.get_name());
-		// ct2.takeDamage(ct1.get_attack_damage());
-	
-		ct1.showInfo();
-		ct2.showInfo();
-		ScavTrap st1("yejinam");
-		st1.showInfo();
-		st1.attack(ct1.get_name());
-		ct1.takeDamage(st1.get_attack_damage());
-		st1.guardGate();		
+		trap1.attack("Second");
+		trap1.showInfo();
+		trap1.takeDamage(10);
+		trap1.showInfo();
+		trap1.guardGate();
 
-		ct1.showInfo();
-		ct2.showInfo();
-		st1.showInfo();
+
+		std::cout << "\n\n\nCopy operator test " << std::endl;
+		trap2 = trap1;
+		trap2.showInfo();
+
+		std::cout << "\n\n\nCopy constructor test " << std::endl;
+		ScavTrap trap3(trap2);
+		trap3.showInfo();
+		std::cout << std::endl << std::endl << std::endl;
 	}
+	{
+		std::cout << std::endl << std::endl << std::endl;
+		ScavTrap *trap3 = new ScavTrap("Third");
+		trap3->attack("First");
+		trap3->takeDamage(10);
+		trap3->showInfo();
+		trap3->beRepaired(10);
+		trap3->showInfo();
+		trap3->guardGate();
+		delete trap3;
+	}
+	{
+		std::cout << std::endl << std::endl << std::endl;
+		ClapTrap *trap3 = new ScavTrap("Third");
+		trap3->attack("First");
+		trap3->takeDamage(10);
+		trap3->showInfo();
+		trap3->beRepaired(10);
+		trap3->showInfo();
+		// trap3->guardGate();
+		delete trap3;
+	}
+
+
+
+		
+	
 }

@@ -6,31 +6,24 @@
 
 class ClapTrap
 {
-private:
+protected:
 		std::string name;
-		int hit_points;
-		int energy_points;
-		int attack_damage;
+		unsigned int hit_points;
+		unsigned int energy_points;
+		unsigned int attack_damage;
 public:
 		ClapTrap(std::string name);
+		ClapTrap(std::string name , unsigned int hit_points, unsigned int energy_points, unsigned int attack_damage );
 		ClapTrap(const ClapTrap& claptrap);
 		ClapTrap& operator=(const ClapTrap& copy);
-		~ClapTrap();
+		virtual ~ClapTrap();
 
 		void attack(const std::string &target);
 		void takeDamage(unsigned int amount);
 		void beRepaired(unsigned int amount);
-
-		int get_hit_points();
-		int get_energy_points();
-		std::string get_name() const ;
-		int get_attack_damage();
-		void set_attack_damage(int amount);
-		void set_hit_points(int amount);
-		void set_energy_points(int amount);
-		void set_name(std::string name);
-
-		void showInfo();
+		
+		std::string get_name() const;
+		void showInfo() const ;
 };
 
 #endif // ClapTrap_HPP
