@@ -2,12 +2,17 @@
 #ifndef AMateria_HPP
 #define AMateria_HPP
 
+#include <iostream>
+#include "ICharacter.hpp"
+class ICharacter;
+
 class AMateria
 {
 protected:
-	std::string const &type;
+	std::string type;
 
 public:
+	AMateria();
 	AMateria(std::string const &type);
 	AMateria(const AMateria &copy);
 	AMateria &operator=(const AMateria &copy);

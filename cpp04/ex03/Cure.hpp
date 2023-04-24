@@ -2,6 +2,7 @@
 #ifndef Cure_HPP
 #define Cure_HPP
 
+
 #include "AMateria.hpp"
 #include "ICharacter.hpp"
 
