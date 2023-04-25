@@ -10,7 +10,7 @@ Floor::Floor() : idx(0), max_len(2)
 
 Floor::~Floor()
 {
-    std::cout << "~Floor()";
+    std::cout << "~Floor()" << std::endl;
     for(int i = 0; i < idx; i++)
         delete floor[i];
     delete floor;

@@ -1,6 +1,5 @@
 #include "MateriaSource.hpp"
 
-const int MateriaSource::MAX_SLOTSIZE = 4;
 MateriaSource::MateriaSource() 
 {
     for (int i  = 0; i < MAX_SLOTSIZE; i++)
@@ -50,7 +49,7 @@ void MateriaSource::learnMateria(AMateria *p)
     {
         if(slot[i] == NULL)
         {
-            std::cout << "MateriaSource learned : " << p->getType() << "(in slot " << i << ")" << std::endl;
+            std::cout << "MateriaSource learned : " << p->getType() << "(in slot [" << i << "])" << std::endl;
             slot[i] = p;
             break;
         }

@@ -6,8 +6,8 @@
 class MateriaSource : public IMateriaSource
 {
 private:
-        AMateria *slot[4];
-        static const int MAX_SLOTSIZE;
+        static const int MAX_SLOTSIZE = 4;
+        AMateria *slot[MAX_SLOTSIZE];
 public:
         MateriaSource();
         MateriaSource(const MateriaSource& copy);

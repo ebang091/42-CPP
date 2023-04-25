@@ -9,9 +9,9 @@ class Character : public ICharacter
 {
     private:
         std::string name;
-        AMateria *slot[4];
-        static const int MAX_SLOTSIZE;
-        static Floor *floor;
+        static const int MAX_SLOTSIZE = 4;
+        AMateria *slot[MAX_SLOTSIZE];
+        static Floor floor;
     public:
         Character(const std::string name);
         Character(const Character &copy);

@@ -5,7 +5,6 @@
 
 int main(void)
 {
-    
     {
         std::cout << std::endl << std::endl;
         std::cout << "AMateria  test\n";
@@ -20,7 +19,7 @@ int main(void)
         std::cout << m1->getType() << std::endl;
         std::cout << m2->getType() << std::endl;
 
-        std::cout << "\nclone test\n";
+        std::cout << "\nAMateria clone test (correct output : cure)\n";
         AMateria *c1 = m1->clone();
         std:: cout << c1->getType();
         std::cout << std::endl << std::endl;
@@ -30,14 +29,14 @@ int main(void)
     }
     {
         std::cout << std::endl << std::endl;
-        std::cout << "Materia Inherit test\n";
+        std::cout << "Materia Inherit test (has to call ~AMateria()\n";
         Cure *c =  new Cure();
         //~AMateria도  호출되어야.
         delete c;
     }
     {
         std::cout << std::endl << std::endl;
-        std::cout << "test ICharacter \n";
+        std::cout << "test ICharacter (use function ,equip function) \n";
         //src에서 만들지 않고 직접 동적할당해서 장착해보았다.
         //AMateria 종류는 직접 해제하는 법 없이 캐릭터 또는 바닥이 소멸시 함께 해제한다.
 
@@ -65,11 +64,8 @@ int main(void)
 
     }
     {
-        
-    }
-    {
         std::cout << std::endl << std::endl;
-        std::cout << "test floor \n";
+        std::cout << "test floor(correct output : Cure, Cure) \n";
         Floor floor = Floor();
         floor.dropItem(new Cure());
         floor.dropItem(new Cure());
@@ -84,13 +80,11 @@ int main(void)
         AMateria *m1 = src->createMateria("cure");
         AMateria *m2 = src->createMateria("ice");
         std::cout << m1->getType() << std::endl;
-        std::cout << m2->getType() << std::endl;
-    
-     
+        std::cout << m2->getType() << std::endl; 
     }
     {
-         std::cout << std::endl << std::endl;
-        std::cout << "test Subject\n";
+        std::cout << std::endl << std::endl;
+        std::cout << "test Subject(see Subject)\n";
         IMateriaSource* src = new MateriaSource();
         src->learnMateria(new Ice());
         src->learnMateria(new Cure());

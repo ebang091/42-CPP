@@ -1,7 +1,6 @@
 #include "Character.hpp"
 
-Floor *Character::floor =  new Floor();
-const int Character::MAX_SLOTSIZE = 4;
+Floor Character::floor = Floor();
 Character::Character(const std::string name) : name(name)
 {
     for(int i = 0 ; i < MAX_SLOTSIZE; i++)
@@ -69,7 +68,7 @@ void Character::equip(AMateria *p)
     {
         if(this->slot[i] == NULL)
         {
-            std::cout << "Character " << this->getName() << " has equipped " <<  p->getType() << " in slot " << i << std::endl;
+            std::cout << "Character " << this->getName() << " has equipped " <<  p->getType() << " in slot [" << i << "]" << std::endl;
             this->slot[i] = p;
             break;
         }
@@ -82,7 +81,7 @@ void Character::unequip(int idx)
         return;
     if (this->slot[idx] != NULL)
     {
-        floor->dropItem(this->slot[idx]);
+        floor.dropItem(this->slot[idx]);
         this->slot[idx] = NULL;
     }
 }
