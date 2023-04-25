@@ -1,19 +1,21 @@
 #include "Character.hpp"
-#include "Floor.hpp"
-class Floor;
-
-// Floor Character::floor = Floor floor;
-Character::Character(const std::string name) : name(name), idx(0)
+const int Character::MAX_SLOTSIZE = 4;
+Character::Character(const std::string name) : name(name)
 {
-    for(int i = 0 ; i < 4; i++)
-        this->inventory[i] = NULL;
+    for(int i = 0 ; i < MAX_SLOTSIZE; i++)
+        this->slot[i] = NULL;
 }
 
 Character::Character(const Character& copy)
 {
     //깊은 복사 해야함
-    for (int i = 0; i < copy.idx; i++)
-        this->inventory[this->idx++] = copy.inventory[i]->clone();
+    for (int i = 0; i < MAX_SLOTSIZE; i++)
+    {
+        if(copy.slot[i] != NULL)
+            this->slot[i] = copy.slot[i]->clone();
+        else
+            this->slot[i] = NULL;
+    }
 }
 
 Character& Character::operator=(const Character& copy)
@@ -22,19 +24,40 @@ Character& Character::operator=(const Character& copy)
     if (this != &copy)
     {
         this->name = copy.name;
-        for (int i = 0; i < this->idx; i++)
-            delete this->inventory[i];
-        this->idx = 0;
-        for (int i =0; i < copy.idx; i++)
-            this->inventory[this->idx++] = copy.inventory[i]->clone();
+        for (int i = 0; i < MAX_SLOTSIZE; i++)
+        {
+            if (this->slot[i] != NULL)
+            {
+                delete this->slot[i];
+                this->slot[i] = NULL;
+            }
+        }
+        for (int i =0; i < MAX_SLOTSIZE; i++)
+        {
+            if(copy.slot[i] != NULL)
+                this->slot[i] = copy.slot[i]->clone();
+        }
     }
     return *this;
 }
 
 Character::~Character()
 {
-    for(int i = 0; i < idx; i++)
-        delete this->inventory[i];
+    std::cout << "~Character()" << std::endl;
+    for(int i = 0; i < 4; i++)
+    {
+        if(slot[i] != NULL)
+            std::cout << slot[i] << std::endl;
+    }
+    for(int i = 0; i < MAX_SLOTSIZE; i++)
+    {
+        
+        if (this->slot[i] != NULL)
+        {
+            delete this->slot[i];
+            this->slot[i] = NULL;
+        }
+    }
 }
 
 std::string const &Character::getName() const
@@ -44,13 +67,19 @@ std::string const &Character::getName() const
 
 void Character::equip(AMateria *p)
 {
-    if (this->idx < 4)
-        this->inventory[this->idx++] = p;
+    for(int i = 0 ; i < MAX_SLOTSIZE; i++)
+    {
+        if(this->slot[i] == NULL)
+        {
+            this->slot[i] = p;
+            break;
+        }
+    }
 }
 
 void Character::unequip(int idx)
 {
-    if(idx < 0 || this->idx <= idx)
+    if(idx < 0 || idx >= MAX_SLOTSIZE)
         return;
 
     
@@ -58,7 +87,9 @@ void Character::unequip(int idx)
 
 void Character::use(int idx, ICharacter &target)
 {
-    if(idx < 0 || this->idx <= idx)
+    if(idx < 0 || MAX_SLOTSIZE <= idx)
         return;
-    this->inventory[idx]->use(target);
+    if(slot[idx] == NULL)
+        return;
+    this->slot[idx]->use(target);
 }

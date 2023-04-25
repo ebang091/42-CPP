@@ -3,13 +3,13 @@
 #include "ICharacter.hpp"
 #include "Floor.hpp"
 
+class Floor;
 class Character : public ICharacter
 {
     private:
         std::string name;
-        AMateria *inventory[4];
-        int idx;
-        static Floor floor;
+        AMateria *slot[4];
+        static const int MAX_SLOTSIZE;
     public:
         Character(const std::string name);
         Character(const Character &copy);

@@ -36,21 +36,54 @@ int main(void)
     {
         std::cout << std::endl << std::endl;
         std::cout << "test ICharacter \n";
+        //src에서 만들지 않고 직접 동적할당해서 장착해보았다.
+        //AMateria 종류는 직접 해제하는 법 없이 캐릭터 또는 바닥이 소멸시 함께 해제한다.
 
+        ICharacter *ch = new Character("character 1");
+        AMateria *am1 = new Cure();//src->createMateria()와 같다.
+        ch->equip(am1);
+        AMateria *am2 = new Cure();
+        ch->equip(am2);
+        AMateria *am3 = new Cure();
+        ch->equip(am3);
+        AMateria *am4 = new Cure();
+        ch->equip(am4);
+        std::cout << am1 << " " << am2 << " " << am3 << " " << am4 << std::endl;
+        ICharacter *ch2 = new Character("character 2");
 
-        AMateria *am = new Cure();
+        ch->use(0, *ch2);
+        ch->use(1, *ch2);
+        ch->use(2, *ch2);
+        ch->use(3, *ch2);
+
+        ch->use(4, *ch2);
+        //ICharacter, cure 둘다 삭제되어야.
+        delete ch;
+        delete ch2;   
+
+    }
+    {
+        std::cout << std::endl << std::endl;
+        std::cout << "test ICharacter copy \n";
+        AMateria *am1 = new Cure();//src->createMateria()와 같다.
+        AMateria *am2 = new Cure();
         ICharacter *ch = new Character("character 1");
         ICharacter *ch2 = new Character("character 2");
 
-        ch->equip(am);
-        ch->use(0, *ch2);
-        //ICharacter, cure 둘다 삭제되어야.
-        delete am;
+        ch->equip(am1);
+        ch->equip(am2);
+        
+        *ch2 = *ch;
+
+        ch2->use(0, *ch2);
+        ch2->use(1, *ch2);
+
         delete ch;
-        delete ch2;   
+        delete ch2;
     }
     {
-
+        std::cout << std::endl << std::endl;
+        std::cout << "test floor \n"; 
 
     }
     {
