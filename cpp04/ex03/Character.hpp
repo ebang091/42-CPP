@@ -4,12 +4,14 @@
 #include "Floor.hpp"
 
 class Floor;
+
 class Character : public ICharacter
 {
     private:
         std::string name;
         AMateria *slot[4];
         static const int MAX_SLOTSIZE;
+        static Floor *floor;
     public:
         Character(const std::string name);
         Character(const Character &copy);
@@ -20,5 +22,4 @@ class Character : public ICharacter
 	    virtual void equip(AMateria *m);
 	    virtual void unequip(int idx);
 	    virtual void use(int idx, ICharacter &target);
-
 };

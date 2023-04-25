@@ -1,4 +1,6 @@
 #include "Character.hpp"
+
+Floor *Character::floor =  new Floor();
 const int Character::MAX_SLOTSIZE = 4;
 Character::Character(const std::string name) : name(name)
 {
@@ -21,6 +23,7 @@ Character::Character(const Character& copy)
 Character& Character::operator=(const Character& copy)
 {
    //깊은 복사해야함
+   std::cout << "Character::operator=(const Character &copy)" << std::endl;
     if (this != &copy)
     {
         this->name = copy.name;
@@ -44,11 +47,6 @@ Character& Character::operator=(const Character& copy)
 Character::~Character()
 {
     std::cout << "~Character()" << std::endl;
-    for(int i = 0; i < 4; i++)
-    {
-        if(slot[i] != NULL)
-            std::cout << slot[i] << std::endl;
-    }
     for(int i = 0; i < MAX_SLOTSIZE; i++)
     {
         
@@ -71,6 +69,7 @@ void Character::equip(AMateria *p)
     {
         if(this->slot[i] == NULL)
         {
+            std::cout << "Character " << this->getName() << " has equipped " <<  p->getType() << " in slot " << i << std::endl;
             this->slot[i] = p;
             break;
         }
@@ -81,8 +80,11 @@ void Character::unequip(int idx)
 {
     if(idx < 0 || idx >= MAX_SLOTSIZE)
         return;
-
-    
+    if (this->slot[idx] != NULL)
+    {
+        floor->dropItem(this->slot[idx]);
+        this->slot[idx] = NULL;
+    }
 }
 
 void Character::use(int idx, ICharacter &target)
@@ -90,6 +92,8 @@ void Character::use(int idx, ICharacter &target)
     if(idx < 0 || MAX_SLOTSIZE <= idx)
         return;
     if(slot[idx] == NULL)
-        return;
+    {
+        std::cout << "error: slot is emtpy." << std::endl;
+    }
     this->slot[idx]->use(target);
 }

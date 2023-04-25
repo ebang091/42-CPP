@@ -1,6 +1,8 @@
 #include "Character.hpp"
 #include "Cure.hpp"
 #include "Ice.hpp"
+#include "MateriaSource.hpp"
+
 int main(void)
 {
     
@@ -63,46 +65,47 @@ int main(void)
 
     }
     {
-        std::cout << std::endl << std::endl;
-        std::cout << "test ICharacter copy \n";
-        AMateria *am1 = new Cure();//src->createMateria()와 같다.
-        AMateria *am2 = new Cure();
-        ICharacter *ch = new Character("character 1");
-        ICharacter *ch2 = new Character("character 2");
-
-        ch->equip(am1);
-        ch->equip(am2);
         
-        *ch2 = *ch;
-
-        ch2->use(0, *ch2);
-        ch2->use(1, *ch2);
-
-        delete ch;
-        delete ch2;
     }
     {
         std::cout << std::endl << std::endl;
-        std::cout << "test floor \n"; 
-
+        std::cout << "test floor \n";
+        Floor floor = Floor();
+        floor.dropItem(new Cure());
+        floor.dropItem(new Cure());
+        floor.checkItem();
     }
     {
-        //  IMateriaSource* src = new MateriaSource();
-        // src->learnMateria(new Ice());
-        // src->learnMateria(new Cure());
-
-        // ICharacter* me = new Character("me");
-        // AMateria* tmp;
-        // tmp = src->createMateria("ice");
-        // me->equip(tmp);
-        // tmp = src->createMateria("cure");
-        // me->equip(tmp);
-        // ICharacter* bob = new Character("bob");
-        // me->use(0, *bob);
-        // me->use(1, *bob);
-        // delete bob;
-        // delete me;
-        // delete src;
+        std::cout << std::endl << std::endl;
+        std::cout << "test MateriaSource\n";
+        IMateriaSource *src = new MateriaSource();
+        src->learnMateria(new Cure());
+        src->learnMateria(new Ice());
+        AMateria *m1 = src->createMateria("cure");
+        AMateria *m2 = src->createMateria("ice");
+        std::cout << m1->getType() << std::endl;
+        std::cout << m2->getType() << std::endl;
+    
+     
+    }
+    {
+         std::cout << std::endl << std::endl;
+        std::cout << "test Subject\n";
+        IMateriaSource* src = new MateriaSource();
+        src->learnMateria(new Ice());
+        src->learnMateria(new Cure());
+        ICharacter* me = new Character("me");
+        AMateria* tmp;
+        tmp = src->createMateria("ice");
+        me->equip(tmp);
+        tmp = src->createMateria("cure");
+        me->equip(tmp);
+        ICharacter* bob = new Character("bob");
+        me->use(0, *bob);
+        me->use(1, *bob);
+        delete bob;
+        delete me;
+        delete src;
     }
     return 0;
 }
