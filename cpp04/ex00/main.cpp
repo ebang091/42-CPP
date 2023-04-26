@@ -31,7 +31,16 @@ int main()
 	{
 		std::cout << std::endl
 				  << std::endl;
-		WrongCat wcat = WrongCat();
-		wcat.makeSound();
+		WrongAnimal *wa = new WrongCat();
+
+		WrongCat *wc = new WrongCat();
+		wa->makeSound();
+		wc->makeSound();
+
+		std::cout << std::endl
+				  << std::endl;
+
+		delete wa;
+		delete wc;
 	}
 }
