@@ -49,8 +49,9 @@ int main(void)
         ch->equip(am3);
         AMateria *am4 = new Cure();
         ch->equip(am4);
+        Character *ch2 = new Character("character 2");
         std::cout << am1 << " " << am2 << " " << am3 << " " << am4 << std::endl;
-        ICharacter *ch2 = new Character("character 2");
+       
 
         ch->use(0, *ch2);
         ch->use(1, *ch2);
@@ -58,10 +59,28 @@ int main(void)
         ch->use(3, *ch2);
 
         ch->use(4, *ch2);
-        //ICharacter, cure 둘다 삭제되어야.
+       //ICharacter, cure 둘다 삭제되어야.
         delete ch;
-        delete ch2;   
+ 
 
+    }
+    {
+        std::cout << std::endl << std::endl;
+        std::cout << "\ntest - Character copy operator(ch2가 잘 ch1의 Materia를 복사해서 사용하는가)\n ";
+        //복사대입연산자
+        Character ch1("T1");
+        Character ch2("T2");
+        AMateria *am1 = new Cure();//src->createMateria()와 같다.
+        AMateria *am2 = new Cure();
+
+        ch1.equip(am1);
+        ch1.equip(am2);
+
+        ch1.use(0, ch2);
+        ch1.use(1, ch2);
+        ch2 = ch1;
+        ch2.use(0,ch1);
+        ch2.use(1,ch1);
     }
     {
         std::cout << std::endl << std::endl;

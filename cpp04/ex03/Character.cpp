@@ -46,8 +46,7 @@ Character& Character::operator=(const Character& copy)
 Character::~Character()
 {
     std::cout << "~Character()" << std::endl;
-    for(int i = 0; i < MAX_SLOTSIZE; i++)
-    {
+    for(int i = 0; i < MAX_SLOTSIZE; i++)    {
         
         if (this->slot[i] != NULL)
         {
