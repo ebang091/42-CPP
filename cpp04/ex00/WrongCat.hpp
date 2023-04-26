@@ -2,9 +2,9 @@
 #ifndef WrongCat_HPP
 # define WrongCat_HPP
 
-#include "Dog.hpp"
+#include "WrongAnimal.hpp"
 
-class WrongCat : public Dog
+class WrongCat : public WrongAnimal
 {
 
 public:
@@ -12,6 +12,8 @@ public:
 		WrongCat(const WrongCat& copy);
 		WrongCat& operator=(const WrongCat& copy);
 		~WrongCat();
+
+		void makeSound() const;
 };
 
 #endif // WrongCat_HPP
