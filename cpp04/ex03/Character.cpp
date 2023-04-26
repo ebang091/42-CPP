@@ -80,9 +80,12 @@ void Character::unequip(int idx)
         return;
     if (this->slot[idx] != NULL)
     {
+        std::cout << "unequip ["  << idx <<']' << std::endl;
         floor.dropItem(this->slot[idx]);
         this->slot[idx] = NULL;
+        return;
     }
+    std::cout << "error: slot is emtpy." << std::endl;
 }
 
 void Character::use(int idx, ICharacter &target)
