@@ -27,11 +27,10 @@ Cure::~Cure()
 
 void Cure::use(ICharacter &target)
 {
-	std::cout << "* shoots an ice bolt at " << target.getName() << " * " << std::endl;
+	std::cout << "* heals " << target.getName() << "'s wounds * " << std::endl;
 }
 
 AMateria *Cure::clone() const
-{
-	AMateria *ret = new Cure();
-	return ret;
+{	
+	return new Cure();
 }
