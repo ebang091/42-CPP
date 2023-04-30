@@ -28,7 +28,7 @@ Ice::~Ice()
 void Ice::use(ICharacter &target)
 {
 	std::cout << "*"
-			  << " heals " << target.getName() << "'s wounds *" << std::endl;
+			  << " shoots an ice bolt at " << target.getName() << " *" << std::endl;
 }
 
 AMateria *Ice::clone() const

@@ -87,7 +87,7 @@ int main(void)
         std::cout << "test floor(correct output : Cure, Cure) \n";
         Floor floor = Floor();
         floor.dropItem(new Cure());
-        floor.dropItem(new Cure());
+        floor.dropItem(new Ice());
         floor.checkItem();
     }
     {

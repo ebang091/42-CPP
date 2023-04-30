@@ -54,7 +54,7 @@ int main()
 		cat2.setIdea("hihi");
 		cat2.showIdeas();
 		cat2 = cat1;
-		cat2.showIdeas();
+		cat2.showIdeas();//cat1처럼 "wow"출력해야. 
 	}
 	{
 		// 복사 생성자
@@ -63,6 +63,8 @@ int main()
 		std::cout << "\n\ntest4\n\n";
 		Cat cat1;
 		cat1.setIdea("wow!");
+		cat1.setIdea("wow2!");
+		cat1.setIdea("wow3!");
 		Cat cat2(cat1);
 		cat1.showIdeas();
 		cat2.showIdeas();

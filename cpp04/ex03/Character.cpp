@@ -69,9 +69,10 @@ void Character::equip(AMateria *p)
         {
             std::cout << "Character " << this->getName() << " has equipped " <<  p->getType() << " in slot [" << i << "]" << std::endl;
             this->slot[i] = p;
-            break;
+            return;
         }
     }
+    std::cout << "character " << this->getName() << " could not equip: full slot." << std::endl;
 }
 
 void Character::unequip(int idx)

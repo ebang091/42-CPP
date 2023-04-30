@@ -61,7 +61,10 @@ AMateria *MateriaSource::createMateria(std::string const & type)
     for(int i = 0; i < MAX_SLOTSIZE; i++)
     {
         if(slot[i] != NULL && slot[i]->getType() == type)
-            return slot[i]->clone();
+           {
+                std::cout << "new Materia created : " << type << std::endl;
+                return slot[i]->clone();
+           }
     }
     std::cout << "MateriaSource error : no such type." << std::endl;
     return NULL;

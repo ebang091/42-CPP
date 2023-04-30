@@ -10,6 +10,7 @@ void check()
 int main()
 {
 	{
+		// Animal *wrong = new Animal();
 		Animal *Aptr = new Cat();
 		Animal *Aptr2 = new Dog();
 
