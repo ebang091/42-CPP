@@ -11,6 +11,15 @@ private:
         int requiredGradeSign;
         int requiredGradeExecute;
         bool ifSigned;
+        class GradeTooHighException: public std::exception{
+                virtual const char *what(void) const throw();
+        };
+        class GradeTooLowException: public std::exception{
+                virtual const char *what(void) const throw();
+        };
+        class HasAlreadyBeenSigned: public std::exception{
+                virtual const char *what(void) const throw();
+        };
 
 public:
         Form(std::string name, int requiredGradeSign, int requiredGradeExecute);
@@ -23,15 +32,7 @@ public:
         int getRequiredGradeExecute() const;
         std::string getName() const;
         bool getIfSigned() const;
-        
         void beSigned(const Bureaucrat &b);
-
-        class GradeTooHighException: public std::exception{
-                virtual const char *what(void) const throw();
-        };
-        class GradeTooLowException: public std::exception{
-                virtual const char *what(void) const throw();
-        };
 };
 
 std::ostream &operator<<(std::ostream &os, const Form &f);

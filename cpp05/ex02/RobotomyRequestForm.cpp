@@ -25,8 +25,9 @@ RobotomyRequestForm::~RobotomyRequestForm()
 void RobotomyRequestForm::execute(Bureaucrat const & executor) const
 {
     AForm::check(executor);
+    std::srand(static_cast<unsigned int>(std::time(0)));
     std::cout << "* drilling noises *" << std::endl;
-    if (rand() % 2 == 0) 
+    if (std::rand() % 2 == 0) 
     {
             std::cout << this->getName() << " has been robotomized successfully" << std::endl;
     } 

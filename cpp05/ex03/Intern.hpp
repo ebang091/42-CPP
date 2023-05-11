@@ -8,7 +8,11 @@
 
 class Intern
 {
-        
+
+private: 
+        class noSuchForm: public std::exception{
+                virtual const char *what(void) const throw();
+        }; 
 public:
         Intern();
         Intern(const Intern& copy);
@@ -16,9 +20,6 @@ public:
         ~Intern();
 
         AForm *makeForm(std::string name, std::string target);
-        class noSuchForm: public std::exception{
-                virtual const char *what(void) const throw();
-        };
 };
 
 #endif // Intern_HPP

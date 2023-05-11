@@ -13,6 +13,12 @@ private:
         static const int LOWEST_GRADE;
         const std::string name;
         int grade;
+        class GradeTooHighException: public std::exception{
+                virtual const char *what(void) const throw();
+        };
+        class GradeTooLowException: public std::exception{
+                virtual const char *what(void) const throw();
+        };
 public:
         Bureaucrat(std::string name, int grade);
         Bureaucrat(const Bureaucrat& copy);
@@ -27,12 +33,7 @@ public:
         void signForm(AForm &f);
         
         void executeForm(AForm const & form);
-        class GradeTooHighException: public std::exception{
-                virtual const char *what(void) const throw();
-        };
-        class GradeTooLowException: public std::exception{
-                virtual const char *what(void) const throw();
-        };
+
 };
 
 std::ostream &operator<<(std::ostream &os, const Bureaucrat &obj);

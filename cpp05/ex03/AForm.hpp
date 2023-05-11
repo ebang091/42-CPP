@@ -11,7 +11,8 @@ private:
         int requiredGradeSign;
         int requiredGradeExecute;
         bool ifSigned;
-
+         //exception handling
+       
 public:
         AForm(std::string name, int requiredGradeSign, int requiredGradeExecute);
         AForm(const AForm& copy);
@@ -32,10 +33,7 @@ public:
 
         //virtual
         virtual void execute(Bureaucrat const & executor) const = 0; 
-        
-        
-        //exception handling
-        class formNotSigned: public std::exception{     
+         class formNotSigned: public std::exception{     
                 virtual const char *what(void) const throw();
         };
         
@@ -46,6 +44,10 @@ public:
         class GradeTooLowException: public std::exception{
                 virtual const char *what(void) const throw();
         };
+        class HasAlreadyBeenSigned: public std::exception{
+                virtual const char *what(void) const throw();
+        };
+
 
 };
 

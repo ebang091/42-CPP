@@ -13,6 +13,12 @@ private:
         static const int LOWEST_GRADE;
         const std::string name;
         int grade;
+        class GradeTooHighException: public std::exception{
+                virtual const char *what(void) const throw();
+        };
+        class GradeTooLowException: public std::exception{
+                virtual const char *what(void) const throw();
+        };
 public:
         Bureaucrat(std::string name, int grade);
         Bureaucrat(const Bureaucrat& copy);
@@ -25,14 +31,6 @@ public:
         void incrementGrade();
         void decrementGrade();
         void signForm(Form &f);
-        
-        //이전과 다르게 public으로 선언
-        class GradeTooHighException: public std::exception{
-                virtual const char *what(void) const throw();
-        };
-        class GradeTooLowException: public std::exception{
-                virtual const char *what(void) const throw();
-        };
 };
 
 std::ostream &operator<<(std::ostream &os, const Bureaucrat &obj);

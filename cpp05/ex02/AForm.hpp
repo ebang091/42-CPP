@@ -32,9 +32,7 @@ public:
 
         //virtual
         virtual void execute(Bureaucrat const & executor) const = 0; 
-        
-        
-        //exception handling
+         //exception handling
         class formNotSigned: public std::exception{     
                 virtual const char *what(void) const throw();
         };
@@ -44,6 +42,9 @@ public:
         };
 
         class GradeTooLowException: public std::exception{
+                virtual const char *what(void) const throw();
+        };
+        class HasAlreadyBeenSigned: public std::exception{
                 virtual const char *what(void) const throw();
         };
 

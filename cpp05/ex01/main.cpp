@@ -9,7 +9,8 @@ int main()
     }
     catch(std::exception &e)
     {
-        std::cout << e.what() ;
+        std::cerr << e.what();
+        
     }
 
     std::cout << "\nTest2 : should throw Grade too High exception.\n";
@@ -18,7 +19,7 @@ int main()
     }
      catch(std::exception &e)
     {
-        std::cout << e.what() ;
+        std::cerr << e.what();
     }
 
     std::cout << "\nTest3 : should throw Grade too Low exception.\n";
@@ -27,7 +28,7 @@ int main()
     }
      catch(std::exception &e)
     {
-        std::cout << e.what() ;
+        std::cerr << e.what();
     }
 
     std::cout << "\nTest4 : should throw Grade too Low exception.\n";
@@ -36,7 +37,7 @@ int main()
     }
      catch(std::exception &e)
     {
-        std::cout << e.what() ;
+        std::cerr << e.what();
     }
 
     std::cout << "\n\nTest5 : should throw Grade too High exception.\n";
@@ -48,7 +49,7 @@ int main()
     }
      catch(std::exception &e)
     {
-        std::cout << e.what() ;
+        std::cerr << e.what();
     }
 
     std::cout << "\n\nTest6 : Normal case - Form getters, copy constructor\n";
@@ -61,7 +62,7 @@ int main()
     }
      catch(std::exception &e)
     {
-        std::cout << e.what() ;
+        std::cerr << e.what() ;
     }
 
     std::cout << "\n\nTest7 : Normal case - Form copy operator\n";
@@ -74,6 +75,6 @@ int main()
     }
     catch(std::exception &e)
     {
-        std::cout << e.what() ;
+        std::cerr << e.what() ;
     }
 }

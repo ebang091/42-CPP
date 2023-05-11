@@ -27,7 +27,7 @@ int main()
         }
         catch(std::exception &e)
         {
-            std::cout << e.what() << std::endl;
+            std::cerr << e.what() << std::endl;
         }
     }
     
@@ -42,7 +42,7 @@ int main()
         }
         catch(std::exception &e)
         {
-            std::cout << e.what() << std::endl;
+            std::cerr << e.what() << std::endl;
         }
     }
 
@@ -57,22 +57,29 @@ int main()
             b2.executeForm(fp1);
         } catch(std::exception &e)
         {
-            std::cout << e.what() << std::endl;
+            std::cerr << e.what() << std::endl;
         }
 
     }
 
 
+    
+    std::cout << "\nTest 4 : should  execute RobotomyRequestForm..()\n";
+    try 
     {
-        std::cout << "\nTest 4 : should  execute RobotomyRequestForm..()\n";
         Bureaucrat b1 = Bureaucrat("seongmik", 1);
         RobotomyRequestForm fr1 = RobotomyRequestForm("home");
-        
+    
         b1.signForm(fr1);
         b1.executeForm(fr1);
     }
+    catch(std::exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
 
-    
+
+    try
     {
         std::cout << "\nTest 5 : should \"not\" execute RobotomyRequestForm..(notSigned)\n";
         Bureaucrat b1 = Bureaucrat("seongmik", 1);
@@ -80,60 +87,95 @@ int main()
 
         b1.executeForm(fr1);
     }
-
+    catch(std::exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+    
     {
         
         std::cout << "\nTest 6 : should \"not\" execute RobotomyRequestForm..(exec)\n";
-        Bureaucrat b1 = Bureaucrat("seongmik", 1);
-        Bureaucrat b2 = Bureaucrat("ebang", 150);
-        
-        RobotomyRequestForm fr1 = RobotomyRequestForm("home");
-        
-        b1.signForm(fr1);
-        b2.executeForm(fr1);
+        try 
+        {
+            Bureaucrat b1 = Bureaucrat("seongmik", 1);
+            Bureaucrat b2 = Bureaucrat("ebang", 150);
+            
+            RobotomyRequestForm fr1 = RobotomyRequestForm("home");
+            b1.signForm(fr1);
+            b2.executeForm(fr1);
+        }
+        catch(std::exception &e)
+        {
+            std::cerr << e.what() << std::endl;
+        }
     }
 
 
     {
         std::cout << "\nTest 7 : should  execute ShrubberyCreationForm\n";
-        Bureaucrat b1 = Bureaucrat("seongmik", 1);
-        
-        ShrubberyCreationForm fs1 = ShrubberyCreationForm("home");
-        b1.signForm(fs1);
-        b1.executeForm(fs1);
+        try
+        {
+            Bureaucrat b1 = Bureaucrat("seongmik", 1);
+            ShrubberyCreationForm fs1 = ShrubberyCreationForm("home");
+            b1.signForm(fs1);
+            b1.executeForm(fs1);
+        }
+        catch(std::exception &e)
+        {
+            std::cerr << e.what() << std::endl;
+        }
     }
 
     {
         std::cout << "\nTest 8 : should \"not\" execute ShrubberyCreationForm(notSigned)\n";
-        Bureaucrat b1 = Bureaucrat("seongmik", 1);
-
-        ShrubberyCreationForm fs1 = ShrubberyCreationForm("home");
-        b1.executeForm(fs1);
+        try 
+        {
+            Bureaucrat b1 = Bureaucrat("seongmik", 1);
+            ShrubberyCreationForm fs1 = ShrubberyCreationForm("home");
+            b1.executeForm(fs1);
+        }
+        catch(std::exception &e)
+        {   
+            std::cerr << e.what() << std::endl;
+        }
     }
 
     {
         
         std::cout << "\nTest 9 : should \"not\" execute ShrubberyCreationForm(exec)\n";
-        Bureaucrat b2 = Bureaucrat("ebang", 150);
-        
-        ShrubberyCreationForm fs1 = ShrubberyCreationForm("home");
-        b2.signForm(fs1);
-        b2.executeForm(fs1);
+        try
+        {
+            Bureaucrat b2 = Bureaucrat("ebang", 150);
+            ShrubberyCreationForm fs1 = ShrubberyCreationForm("home");
+            b2.signForm(fs1);
+            b2.executeForm(fs1);
+        }
+        catch(std::exception &e)
+        {
+            std::cerr << e.what() << std::endl;
+        }
     }
 
     {
         std::cout << "\nTest 10 : Forms copy constructor\n";
-        PresidentialPardonForm fp1 = PresidentialPardonForm("home");
-        RobotomyRequestForm fr1 = RobotomyRequestForm("home");
-        ShrubberyCreationForm fs1 = ShrubberyCreationForm("home");
-        PresidentialPardonForm tempp(fp1);
-        std::cout << tempp << std::endl;
-    
-        RobotomyRequestForm tempr(fr1);
-        std::cout << tempr << std::endl;
+        try 
+        {
+            PresidentialPardonForm fp1 = PresidentialPardonForm("home");
+            RobotomyRequestForm fr1 = RobotomyRequestForm("home");
+            ShrubberyCreationForm fs1 = ShrubberyCreationForm("home");
+            PresidentialPardonForm tempp(fp1);
+            std::cout << tempp << std::endl;
         
-        ShrubberyCreationForm temps(fs1);
-        std::cout << temps << "\n";
+            RobotomyRequestForm tempr(fr1);
+            std::cout << tempr << std::endl;
+            
+            ShrubberyCreationForm temps(fs1);
+            std::cout << temps << "\n";
+        }
+        catch(std::exception &e)
+        {
+            std::cerr << e.what() << std::endl;
+        }
     }
     
 
