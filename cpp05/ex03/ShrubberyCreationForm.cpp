@@ -39,9 +39,5 @@ void ShrubberyCreationForm::execute(Bureaucrat const & executor) const
                 " _| |_  | |____| (_) | \\ V / |  __/ \\___  |./ /___/\\__/ /|  __/| (_) || |_| || |\n"
                 " \\___/  \\_____/ \\___/   \\_/   \\___|     |_/\\_____/\\____/  \\___| \\___/  \\__,_||_|\n";
 
-                
-
-
-
         file.close();
 }

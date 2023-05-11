@@ -16,8 +16,6 @@ public:
         ~ShrubberyCreationForm();
 
         virtual void execute(Bureaucrat const & executor) const;
-
-
 };
 
 #endif // ShrubberyCreationForm_HPP
