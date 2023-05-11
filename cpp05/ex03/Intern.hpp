@@ -1,7 +1,7 @@
 #pragma once
 #ifndef Intern_HPP
 # define Intern_HPP
-#include "Form.hpp"
+#include "AForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "ShrubberyCreationForm.hpp"
 #include "PresidentialPardonForm.hpp"

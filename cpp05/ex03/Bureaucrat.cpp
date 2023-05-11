@@ -103,6 +103,3 @@ void Bureaucrat::executeForm(AForm const & form)
         std::cout << this->name << " could not execute the form because " << e.what();
     }
 }
-
-
-

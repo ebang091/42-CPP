@@ -33,6 +33,7 @@ public:
         class GradeTooLowException: public std::exception{
                 virtual const char *what(void) const throw();
         };
+        //class hasAlreadySigned
 };
 
 std::ostream &operator<<(std::ostream &os, const Bureaucrat &obj);

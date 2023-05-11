@@ -14,7 +14,6 @@ int main()
 
     */
 
-
     {
         std::cout << "\nTest 1 : should execute PresidentialPardonForm.\n";
         Bureaucrat b1 = Bureaucrat("seongmik", 1);
@@ -32,7 +31,6 @@ int main()
         }
     }
     
-
     {
         std::cout << "\nTest 2 : should \"not\" execute PresidentialPardonForm.(notSigned)\n";
         Bureaucrat b1 = Bureaucrat("seongmik", 1);

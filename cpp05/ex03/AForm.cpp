@@ -4,9 +4,9 @@
 AForm::AForm(std::string name, int requiredGradeSign, int requiredGradeExecute) : name(name), requiredGradeSign(requiredGradeSign), requiredGradeExecute(requiredGradeExecute), ifSigned(false)
 {
     if(requiredGradeExecute < 1 || requiredGradeSign < 1)
-        throw Bureaucrat::GradeTooHighException();
+        throw GradeTooHighException();
     if(requiredGradeExecute > 150 || requiredGradeSign > 150)
-        throw Bureaucrat::GradeTooLowException();
+        throw GradeTooLowException();
     std::cout << "Form " << name << " requiredGradeForSign [" << requiredGradeSign << "] " << " requiredGradeForExecute ["  << requiredGradeExecute << "] created.\n";
 }
 
@@ -53,25 +53,25 @@ bool AForm::getIfSigned() const
 void AForm::setRequiredGradeSign(int grade)
 {
     if(grade < 1 )
-        throw Bureaucrat::GradeTooHighException();
+        throw GradeTooHighException();
     else if(grade > 150)
-        throw Bureaucrat::GradeTooLowException();
+        throw GradeTooLowException();
     this->requiredGradeSign = grade;
 }
 
 void AForm::setRequiredGradeExecute(int grade)
 {
     if(grade < 1 )
-        throw Bureaucrat::GradeTooHighException();
+        throw GradeTooHighException();
     else if(grade > 150)
-        throw Bureaucrat::GradeTooLowException();
+        throw GradeTooLowException();
     this->requiredGradeExecute = grade;
 }
 
 void AForm::beSigned(const Bureaucrat &b)
 {
     if (this->requiredGradeSign < b.getGrade())
-        throw Bureaucrat::GradeTooLowException();
+        throw GradeTooHighException();
     else
         this->ifSigned = true;
 }
@@ -87,11 +87,21 @@ void AForm::check(Bureaucrat const & executor) const
     if (this->ifSigned == false)
         throw formNotSigned();
     else if(this->requiredGradeExecute < executor.getGrade())
-        throw Bureaucrat::GradeTooLowException();
+        throw GradeTooHighException();
 }
 
 const char *AForm::formNotSigned::what(void) const throw()
 {
     return "Form was not signed.\n";
+}
+
+const char *AForm::GradeTooHighException::what() const throw ()
+{
+    return "Grade was too high for the Bureaucrat.\n";
+}
+
+const char *AForm::GradeTooLowException::what() const throw ()
+{
+    return "Grade was too low for the Bureaucrat.\n";
 }
 

@@ -39,7 +39,7 @@ int main()
         std::cout << e.what() ;
     }
 
-    std::cout << "\n\nTest5 : should throw Grade too Low exception.\n";
+    std::cout << "\n\nTest5 : should throw Grade too High exception.\n";
     try
     {
         Form f5 = Form("Form5", 50, 3);
@@ -50,8 +50,6 @@ int main()
     {
         std::cout << e.what() ;
     }
-
-
 
     std::cout << "\n\nTest6 : Normal case - Form getters, copy constructor\n";
     try 
@@ -69,8 +67,8 @@ int main()
     std::cout << "\n\nTest7 : Normal case - Form copy operator\n";
     try 
     {
-        Form f7("Form7", 100, 100);
         Form f1 = Form("Form1", 3, 50);
+        Form f7("Form7", 100, 100);
         f7 = f1;
         std::cout << f7;
     }

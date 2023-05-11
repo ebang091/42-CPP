@@ -13,11 +13,8 @@ public:
         PresidentialPardonForm(const PresidentialPardonForm& copy);
         PresidentialPardonForm& operator=(const PresidentialPardonForm& copy);
         ~PresidentialPardonForm();
-        virtual void execute(Bureaucrat const & executor) const
-        {
-                AForm::check(executor);
-                std::cout << this->getName() << " has been pardoned by Zaphod Beeblebrox.\n";
-        }
+        virtual void execute(Bureaucrat const & executor) const;
+        
 };
 
 #endif // PresidentialPardonForm_HPP

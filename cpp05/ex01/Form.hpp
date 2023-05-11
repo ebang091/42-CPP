@@ -25,7 +25,13 @@ public:
         bool getIfSigned() const;
         
         void beSigned(const Bureaucrat &b);
-        void execute(Bureaucrat const & executor) const;
+
+        class GradeTooHighException: public std::exception{
+                virtual const char *what(void) const throw();
+        };
+        class GradeTooLowException: public std::exception{
+                virtual const char *what(void) const throw();
+        };
 };
 
 std::ostream &operator<<(std::ostream &os, const Form &f);
