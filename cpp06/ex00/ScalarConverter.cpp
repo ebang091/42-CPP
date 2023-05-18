@@ -1,17 +1,19 @@
 #include "ScalarConverter.hpp"
+bool ScalarConverter::isnum = true;
+bool ScalarConverter::f_print_flag= true;
+
 ScalarConverter::ScalarConverter() 
 {}
 
 ScalarConverter::ScalarConverter(const ScalarConverter& copy)
 {
-    this->isnum = copy.isnum;
+    isnum = copy.isnum;
     this->f_print_flag = copy.f_print_flag;
 }
 
 ScalarConverter& ScalarConverter::operator=(const ScalarConverter& copy)
 {
     if(this != &copy){
-        this->isnum = copy.isnum;
         this->f_print_flag = copy.f_print_flag;
     }
     return *this;
@@ -21,14 +23,14 @@ ScalarConverter::~ScalarConverter()
 {}
 
 void ScalarConverter::convert(std::string str){
-    this->isnum = true;
+    isnum = true;
     for(unsigned int i = 0; i < str.length(); i++)
     {
         if(!isdigit(str[i]) && str[i] != '.')
-            this->isnum = false;
+            isnum = false;
     }
     if(str == "nan" || str == "inf" || str[str.length() -1] == 'f')
-        this->isnum = true;
+        isnum = true;
     print_char(str);
     print_int(str);
     print_double(str);
@@ -65,7 +67,7 @@ void ScalarConverter::print_char(std::string str){
 void ScalarConverter::print_int(std::string str){
     
     std::cout << "int: ";
-    if (this->isnum == false && str != "nan" && str != "inf" && str != "inff")
+    if (isnum == false && str != "nan" && str != "inf" && str != "inff")
     {
         if (str.length() == 1)
             std::cout << static_cast<int>(str[0])  << "\n";
@@ -91,7 +93,7 @@ void ScalarConverter::print_double(std::string str){
     int f_print_flag = 1;
     char *endPtr;
 
-    if(this->isnum == false){
+    if(isnum == false){
         if(str.length() == 1)
         {
             double d = static_cast<double>(str[0]);
@@ -120,7 +122,7 @@ void ScalarConverter::print_float(std::string str){
     
     std::cout << "float: ";
     char *endPtr;
-     if(this->isnum == false){
+     if(isnum == false){
         if(str.length() == 1)
         {
             double d = static_cast<double>(str[0]);
