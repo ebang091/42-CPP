@@ -102,7 +102,6 @@ void identify(Base& p) {
     int flag = 1;
     for (int i  = 0; i < 3; i++)
     {
-        // std::cout << candidate[i] << "\n";
         if(candidate[i] == 0)
         {
             flag = 0;
@@ -112,25 +111,4 @@ void identify(Base& p) {
     if(flag)
         std::cout << "Base\n";
     std::cout << "\n";
-
-    // try {
-	// 	(void)dynamic_cast<A &>(p);
-	// }
-	// catch (std::bad_cast &bc) {
-	// 	std::cout << "A instance" << std::endl;
-	// }
-
-	// try {
-	// 	(void)dynamic_cast<B &>(p);
-	// }
-	// catch (std::bad_cast &bc) {
-	// 	std::cout << "B instance" << std::endl;
-	// }
-
-	// try {
-	// 	(void)dynamic_cast<C &>(p);
-	// }
-	// catch (std::bad_cast &bc) {
-	// 	std::cout << "C instance" << std::endl;
-	// }
 }
