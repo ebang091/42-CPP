@@ -14,6 +14,9 @@ class ScalarConverter
 private:
         static bool isnum;
         static bool f_print_flag;
+        static bool isSpecial;
+        static bool isFloat;
+        static bool isError;
 public:
         ScalarConverter();
         ScalarConverter(const ScalarConverter& copy);
