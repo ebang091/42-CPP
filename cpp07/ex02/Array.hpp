@@ -18,9 +18,7 @@ public:
 
     Array(unsigned int n) : len(n) {
         this->elements = new T[n];
-        for(unsigned int i = 0; i < n ; i++){
-            this->elements[i] = T();
-        }
+        // // }
         std::cout << "Array parameter constructor called.\n";
     };
 
@@ -51,6 +49,7 @@ public:
         if(this->elements)
             delete []this->elements;
         this->elements = NULL;
+        this->len = 0;
         std::cout << "Array default destructor called.\n";
     };
 
@@ -58,7 +57,7 @@ public:
         return this->len;
     };
 
-    T &operator[](unsigned int idx){
+    T &operator[](unsigned int idx) const {
         if(idx < 0 || idx >= this->len){
             throw OutOfBoundException();
         }
@@ -66,7 +65,7 @@ public:
     };
 
     const T &operator[](unsigned int idx) const {
-        if(idx < 0 || idx >= this->len){
+        if(idx >= this->len){
             throw OutOfBoundException();
         }
         return elements[idx];

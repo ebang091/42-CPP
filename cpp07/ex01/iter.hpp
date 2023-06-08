@@ -18,8 +18,22 @@ void iter(const T *array, size_t len, void (*fp)(T&)){
     } 
 }
 
+
+template <typename T>
+void printFunction(T & data){
+     std::cout << data << " ";
+}
+
+template <typename T>
+void printFunction(const T & data) {
+    std::cout << "by simpleFunciton2(): " << data << "\n ";
+}
+
+
+
 template <typename T>
 void simpleFunction(T & data){
-    std::cout << data << " ";
+    printFunction(data);
 }
+
 #endif // iter_HPP
