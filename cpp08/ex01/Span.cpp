@@ -1,18 +1,19 @@
 #include "Span.hpp"
 
-Span::Span(unsigned int N):idx(0), max_len(N), isSorted(false)
+Span::Span(unsigned int N): max_len(N), isSorted(false)
 {}
 
-Span::Span(const Span &copy): vec(copy.vec), idx(copy.idx), max_len(copy.max_len), isSorted(false){
+Span::Span(const Span &copy): vec(copy.vec), max_len(copy.max_len), isSorted(false){
 
 }
 
 Span &Span::operator=(const Span &copy){
 	if(this == &copy)
 		return *this;
-	vec = copy.vec;
-	idx = copy.idx;
-	max_len = copy.max_len;
+	std::vector<int> tmp;
+	tmp = copy.vec;
+	this->vec = tmp;
+	this -> max_len = copy.max_len;
 	return *this;
 }
 
@@ -21,15 +22,14 @@ Span::~Span(){
 }
 
 void Span::addNumber(int n){
-	if(this->idx >= max_len)
+	if(vec.size() >= max_len)
 		throw std::runtime_error("error: maximum storage of integers.\n");
 	vec.push_back(n);
-	this->idx++;
 	isSorted = false;
 }
 
 long long  Span::shortestSpan(){
-	if(idx == 0 || idx == 1)
+	if(vec.size() == 0 || vec.size() == 1)
 		throw std::runtime_error("error: more than 2 elements required.\n");
 	if(isSorted == false){
 		sort(vec.begin(), vec.end());
@@ -45,7 +45,7 @@ long long  Span::shortestSpan(){
 }
 
 long long Span::longestSpan(){
-	if(idx == 0 || idx == 1)
+	if(vec.size() == 0 || vec.size() == 1)
 		throw std::runtime_error("error: more than 2 elements required.\n");
 	if(isSorted == false){
 		sort(vec.begin(), vec.end());
@@ -62,5 +62,15 @@ int Span::getNum(unsigned int idx) const {
 }
 
 unsigned int Span::size() const {
-	return this->idx;
+	return vec.size();
+}
+
+unsigned int Span::getMaxSize() const {
+	return this->max_len;
+}
+
+void Span::changeNum(unsigned int idx, int value){
+	if (idx >= vec.size())
+		throw std::runtime_error("Invalid index\n");
+	vec[idx] = value;
 }

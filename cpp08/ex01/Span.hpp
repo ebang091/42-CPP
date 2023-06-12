@@ -10,7 +10,6 @@ class Span
 
 private:
 	std::vector<int> vec;
-	unsigned int idx;
 	unsigned int max_len;
 	bool isSorted;
 
@@ -26,6 +25,8 @@ public:
 	long long longestSpan();
 	unsigned int size() const ;
 	int getNum(unsigned int idx) const;
+	unsigned int getMaxSize() const;
+	void changeNum(unsigned int idx, int value);
 
 
 };
