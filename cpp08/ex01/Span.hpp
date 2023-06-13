@@ -27,7 +27,9 @@ public:
 	int getNum(unsigned int idx) const;
 	unsigned int getMaxSize() const;
 	void changeNum(unsigned int idx, int value);
-
+	void fill(std::vector<int>::iterator &begin, std::vector<int>::iterator &end, int value);
+	std::vector<int>::iterator begin();
+	std::vector<int>::iterator end();
 
 };
 

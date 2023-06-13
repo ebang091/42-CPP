@@ -58,7 +58,6 @@ int main() {
             std::cout << e.what() << std::endl;
         }
             std::cout << std::endl;
-
     }
 
         {
@@ -103,20 +102,14 @@ int main() {
         }
         std::cout << std::endl;
           try {
-            std::cout << "find 50\n";
-            std::deque<int>::iterator find = easyfind(intDeque, 50);
+            std::cout << "find 70\n";
+            std::deque<int>::iterator find = easyfind(intDeque, 70);
             std::cout << "Value found at index: " << std::distance(intDeque.begin(), find) << std::endl;
         } catch (const std::exception& e) {
             std::cout << e.what() << std::endl;
         }
             std::cout << std::endl;
-        
-        
-        
-
     }
-
-
     
     return 0;
 }
