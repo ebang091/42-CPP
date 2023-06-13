@@ -6,6 +6,10 @@ typedef struct data  Data;
 struct data{
     int idx;
     int num;
+    Data &operator=(int value){
+        num = value;
+        return *this;
+    }
 };
 
 std::ostream &operator<<(std::ostream &os, const Data &d){
@@ -96,7 +100,7 @@ int main(){
         }
         std::cout << std::endl;
         //구조체 인덱스 접근 불가
-        // arr3[2] = 1000;
+        arr3[2] = 1000;
         for(unsigned int i = 0; i < arr3.size(); i++){
             std::cout << arr3[i] << " ";
         }
