@@ -18,7 +18,6 @@ public:
 
     Array(unsigned int n) : len(n) {
         this->elements = new T[n];
-        // // }
         std::cout << "Array parameter constructor called.\n";
     };
 
@@ -34,7 +33,8 @@ public:
         
         if(this != &copy)
         {
-            delete this->elements;
+            if(this->elements)
+               delete this->elements;
             this->len = copy.size();
             this->elements = new T[this->len];
             for(unsigned int  i = 0; i < copy.size(); i++){
@@ -57,7 +57,7 @@ public:
         return this->len;
     };
 
-    T &operator[](unsigned int idx) const {
+    T &operator[](unsigned int idx) {
         if(idx < 0 || idx >= this->len){
             throw OutOfBoundException();
         }
@@ -65,6 +65,7 @@ public:
     };
 
     const T &operator[](unsigned int idx) const {
+        std::cout << "operator[] with const \n";
         if(idx >= this->len){
             throw OutOfBoundException();
         }
