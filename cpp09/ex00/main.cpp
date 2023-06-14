@@ -34,7 +34,19 @@ input  받은 database 파싱하기
 
 */
 
-bool save_database(std::map<std::string, double> &data){
+//
+int strDateToInt(std::string strDate){
+    std::string ret;
+    //string YYYY-MM-DD 형태의 날짜를 int형으로 바꾸어 반환한다.
+    // .     0123456789
+    ret.assign(strDate.c_str(), 0, 4);
+    ret.append(strDate.c_str(), 5, 2);
+    ret.append(strDate.c_str(), 8, 2);
+    int intDate = static_cast<int>(strtod(ret.c_str(), NULL));
+    return intDate;
+}
+
+bool save_database(std::vector<std::pair<int, double> > &data){
     std::ifstream database;
     std::string str;
     database.open("data.csv");
@@ -46,7 +58,7 @@ bool save_database(std::map<std::string, double> &data){
 
     bool firstLine = true;
     char date[128]; 
-    char exchange_rate[128];
+    char exchangeRate[128];
     std::cout << str <<"\n";
     
     while(database.eof() == false){
@@ -61,12 +73,13 @@ bool save_database(std::map<std::string, double> &data){
         if(pos != std::string::npos)//찾았다면
         {
             str.copy(date, pos, 0);
-            str.copy(exchange_rate, str.size() - 1 , pos+1);
-            std::string str_date = date;
-            std::string str_exchage_rate = exchange_rate;
+            str.copy(exchangeRate, str.size() - 1 , pos+1);
+            std::string strDate = date;
+            int intDate = strDateToInt(strDate);
+            std::string strExchangeRate = exchangeRate;
             
-            double d_exchange_rate = strtod(str_exchage_rate.c_str(), NULL);
-            data.insert(std::pair<std::string, double>(str_date, d_exchange_rate));
+            double dExchangeRate = strtod(strExchangeRate.c_str(), NULL);
+            data.push_back(std::pair<int, double>(intDate, dExchangeRate));
         }
         else
         {
@@ -80,27 +93,36 @@ bool save_database(std::map<std::string, double> &data){
     return SUCCESS;
 }
 
-bool cmp(std::pair<std::string, double> a, std::pair<std::string, double> b){
+bool cmp(std::pair<int, double>  a, std::pair<int, double> b){
     if(a.first < b.first)
         return true;
     return false;
 }
+
 
 int main(int argc, char **argv){
     if(argc != 2){
         std::cout << "usage : ./btc [input filename]\n";
         return 1;
     }
-    std::map<std::string, double> data;
+
+    //dataSaver
+    std::vector<std::pair<int, double> >  data;
     if(save_database(data)){
         std::cout << "reading database failed.\n";
         return 1;
     }
     sort(data.begin(), data.end(), cmp);
-    std::map<std::string, double>::iterator it;
-    for(it = data.begin(); it != data.end(); it++){
-        std::cout << it->first << " " << it->second << "\n";
-    }
+
+
+    std::vector<std::pair<int, double> >::iterator  it;
+    // 2012-11-03,10.62
+    it = std::upper_bound(data.begin(), data.end(), std::pair<int, double>(20121102, 0), cmp);
+    std::cout << (--it)->first << " " << it->second << "\n";
+    // for(it = data.begin(); it != data.end(); it++){
+    //     std::cout << it->first << " " << it->second << "\n";
+    // }
+    // std::cout << data.size(); 
     std::ifstream ifs;
     std::string filename = argv[1];
     ifs.open(filename);
