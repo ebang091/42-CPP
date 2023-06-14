@@ -6,55 +6,67 @@ void check(){
 int main() {
 
 	std::cout << "------------------test start!---------------\n";
-	std::cout << "------------------test1---------------\n";	
-	try{
-		Span span(6);
-		span.addNumber(0);
-		span.addNumber(1);
-		span.addNumber(2);
-		for(unsigned int i = 0 ; i < span.size(); i++)
-			std::cout << span.getNum(i) << " ";
-		std::cout << "\n";
-		std::cout << "shortest "<<   span.shortestSpan() << std::endl;
-		std::cout << "longest " << span.longestSpan() << std::endl;
-	}
-	catch (std::runtime_error &e){
-		std::cout << e.what() << std::endl;
+	
+	{
+		std::cout << "------------------test1---------------\n";	
+		try{
+			Span span(6);
+			span.addNumber(0);
+			span.addNumber(1);
+			span.addNumber(2);
+			for(unsigned int i = 0 ; i < span.size(); i++)
+				std::cout << span.getNum(i) << " ";
+			std::cout << "\n";
+			std::cout << "shortest "<<   span.shortestSpan() << std::endl;
+			std::cout << "longest " << span.longestSpan() << std::endl;
+		}
+		catch (std::runtime_error &e){
+			std::cout << e.what() << std::endl;
+		}
 	}
 	
 	std::cout << "\n------------------test2---------------\n";
-	try{
-		Span span(10);
-		for(int i = 0; i < 111; i++){
-			span.addNumber(i);
+	{
+		try{
+			Span span(10);
+			for(int i = 0; i < 111; i++){
+				span.addNumber(i);
+			}
+			for(unsigned int i = 0 ; i < span.size(); i++)
+				std::cout << span.getNum(i) << " ";
+			std::cout << "\n";
 		}
-		for(unsigned int i = 0 ; i < span.size(); i++)
-			std::cout << span.getNum(i) << " ";
-		std::cout << "\n";
-	}
-	catch (std::runtime_error &e){
-		std::cout << e.what() << std::endl;
+		catch (std::runtime_error &e){
+			std::cout << e.what() << std::endl;
+		}
 	}
 
 	std::cout << "\n------------------test3---------------\n";
-	try{
-		srand(time(NULL));
-		Span span(6);
-		for(int i = 0; i < 6; i++){
-			span.addNumber(rand() % 100);
+	{
+		try{
+			srand(time(NULL));
+			Span span(6);
+			for(unsigned int i = 0; i < span.getMaxSize(); i++){
+				span.addNumber(rand() % 100);
+			}
+			for(unsigned int i = 0 ; i < span.size(); i++)
+				std::cout << (span.getNum(i)) << " ";
+			std::cout << "\n";
+
+			std::cout << "size : " << span.size() << std::endl;
+			std::cout << "shortest "<<   span.shortestSpan() << std::endl;
+			std::cout << "longest " << span.longestSpan() << std::endl;
 		}
-		for(unsigned int i = 0 ; i < span.size(); i++)
-			std::cout << (span.getNum(i)) << " ";
-		std::cout << "\n";
-		std::cout << "shortest "<<   span.shortestSpan() << std::endl;
-		std::cout << "longest " << span.longestSpan() << std::endl;
-	}
-	catch (std::runtime_error &e){
-		std::cout << e.what() << std::endl;
+		catch (std::runtime_error &e){
+			std::cout << e.what() << std::endl;
+		}
 	}
 
 	std::cout << "\n------------------test4---------------\n";
-	try{
+	
+	{
+	try
+	{
 		Span span(10);
 		for(int i = 0; i < 9; i++){
 			span.addNumber(i);
@@ -83,16 +95,39 @@ int main() {
 		std::cout << std::endl;
 
 		std::cout << "copySpan \n";
-		std::cout << "size " << copySpan.size() << " max size " << copySpan.getMaxSize() << "\n";
 		for(unsigned int i = 0 ; i < copySpan.size(); i++)
 			std::cout << copySpan.getNum(i) << " ";
 		std::cout << std::endl;
 
 	}
 	catch (std::runtime_error &e){
-		std::cout << e.what() << std::endl;
+			std::cout << e.what() << std::endl;
+		}
 	}
-	// std::cout << "\n------------------test5---------------\n";
+	{	
+		std::cout << "\n--------test5----------\n";
+		Span span(17);
+		for(unsigned int  i = 0; i < 17; i++)
+			span.addNumber(i+1);
+		std::vector<int>::iterator it = span.begin();
+		std::vector<int>::iterator ite = span.end();
+		while(it != ite){
+			std::cout << *it << " ";
+			it++;
+		}
+		std::cout << std::endl;
+
+		fill(span.begin(), span.end(), 1);
+		it = span.begin();
+		ite = span.end();
+		while(it != ite){
+			std::cout << *it << " ";
+			it++;
+		}
+		std::cout << std::endl;
+	}
+
+	// std::cout << "\n------------------test6---------------\n";
 	// try{
 	// 	Span span(100000);
 	// 	for(int i = 0; i < 10000; i++){
@@ -106,7 +141,7 @@ int main() {
 	// }
 
 	std::cout << "\n--------------------------------end of test-----------------------------------\n";
-	atexit(check);
+	// atexit(check);
 
     return 0;
 }

@@ -60,7 +60,7 @@ int main()
         std::deque<int> mdeque;
         mdeque.push_back(5);
         mdeque.push_back(17);
-        std::cout << mdeque.front() << std::endl;
+        std::cout << mdeque.back() << std::endl;
         mdeque.pop_back();
         std::cout << mdeque.size() << std::endl;
         mdeque.push_back(3);
@@ -86,7 +86,7 @@ int main()
         std::vector<int> mvector;
         mvector.push_back(5);
         mvector.push_back(17);
-        std::cout << mvector.front() << std::endl;
+        std::cout << mvector.back() << std::endl;
         mvector.pop_back();
         std::cout << mvector.size() << std::endl;
         mvector.push_back(3);
@@ -113,7 +113,13 @@ int main()
         for(int i = 0; i < 10; i++){
             mstack.push(i);
         }
-
+        MutantStack<long long>::iterator it = mstack.begin();
+        MutantStack<long long>::iterator ite = mstack.end();
+        while(it != ite){
+            std::cout << *it << " ";
+            it++;
+        }
+        std::cout << std::endl;
         std::cout << mstack.empty() << std::endl;
         std::cout << mstack.size() << std::endl;
         std::cout << *(mstack.begin()) << std::endl;
@@ -124,6 +130,7 @@ int main()
         std::cout << copy.size() << std::endl;
         std::cout << *(copy.begin()) << std::endl;
 
+        std::cout << "copy test\n";
         *(mstack.begin()) = 100;
         std::cout << "mstack begin : " << *mstack.begin() << std::endl;
         std::cout << "copy begin: " <<*copy.begin() << std::endl;
@@ -134,8 +141,9 @@ int main()
         std::cout << "\n------------------------test6-------------------------\n";
         MutantStack<long long, std::vector<long long> > mstack;
         srand(time(NULL));
+        srand(time(NULL));
         for(int i = 0; i < 10; i++){
-            mstack.push(i);
+            mstack.push(rand() % 100);
         }
         MutantStack<long long , std::vector<long long> >::reverse_iterator it = mstack.rbegin();
         MutantStack<long long, std::vector<long long> >::reverse_iterator ite = mstack.rend();
@@ -144,6 +152,16 @@ int main()
             it++;
         }
         std::cout << std::endl;
+        mstack.pop();
+        mstack.pop();
+        it = mstack.rbegin();
+        ite = mstack.rend();
+        while(it != ite){
+            std::cout << *it << " ";
+            it++;
+        }
+        std::cout << std::endl;
+
         
     }
     return 0;
