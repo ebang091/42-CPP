@@ -1,5 +1,5 @@
-#include <iostream>
-#include <algorithm>
+#include "BitcoinExchage.hpp"
+
 /*
 내부에 있는 database 에서 값 불러오기
 : 원하는 연-원-일을 갖고 있을 때. 
@@ -33,7 +33,80 @@ input  받은 database 파싱하기
 
 
 */
-int main(){
-    
 
+bool save_database(std::map<std::string, double> &data){
+    std::ifstream database;
+    std::string str;
+    database.open("data.csv");
+    if(database.rdstate())
+    {
+        std::cout << "database read failed.\n";
+        return 1;
+    }
+
+    bool firstLine = true;
+    char date[128]; 
+    char exchange_rate[128];
+    std::cout << str <<"\n";
+    
+    while(database.eof() == false){
+        std::getline(database, str, '\n');
+        if(database.eof())
+            break;
+        if(firstLine) {
+            firstLine = false; continue;
+        }
+        size_t pos = str.find(",", 0);
+        
+        if(pos != std::string::npos)//찾았다면
+        {
+            str.copy(date, pos, 0);
+            str.copy(exchange_rate, str.size() - 1 , pos+1);
+            std::string str_date = date;
+            std::string str_exchage_rate = exchange_rate;
+            
+            double d_exchange_rate = strtod(str_exchage_rate.c_str(), NULL);
+            data.insert(std::pair<std::string, double>(str_date, d_exchange_rate));
+        }
+        else
+        {
+            std::cout << "wrong database\n";
+            database.close();
+            return FAIL;
+        }
+    }
+    database.close();
+    std::cout << "finish reading database.\n";
+    return SUCCESS;
+}
+
+bool cmp(std::pair<std::string, double> a, std::pair<std::string, double> b){
+    if(a.first < b.first)
+        return true;
+    return false;
+}
+
+int main(int argc, char **argv){
+    if(argc != 2){
+        std::cout << "usage : ./btc [input filename]\n";
+        return 1;
+    }
+    std::map<std::string, double> data;
+    if(save_database(data)){
+        std::cout << "reading database failed.\n";
+        return 1;
+    }
+    sort(data.begin(), data.end(), cmp);
+    std::map<std::string, double>::iterator it;
+    for(it = data.begin(); it != data.end(); it++){
+        std::cout << it->first << " " << it->second << "\n";
+    }
+    std::ifstream ifs;
+    std::string filename = argv[1];
+    ifs.open(filename);
+    if(ifs.rdstate()){
+        std::cout << "error: wrong file\n";
+        ifs.close();
+        return 1;
+    }
 }
