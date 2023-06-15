@@ -1,4 +1,4 @@
-#include "BitcoinExchage.hpp"
+#include "BitcoinExchange.hpp"
 
 /*
 내부에 있는 database 에서 값 불러오기
@@ -35,69 +35,11 @@ input  받은 database 파싱하기
 */
 
 //
-int strDateToInt(std::string strDate){
-    std::string ret;
-    //string YYYY-MM-DD 형태의 날짜를 int형으로 바꾸어 반환한다.
-    // .     0123456789
-    ret.assign(strDate.c_str(), 0, 4);
-    ret.append(strDate.c_str(), 5, 2);
-    ret.append(strDate.c_str(), 8, 2);
-    int intDate = static_cast<int>(strtod(ret.c_str(), NULL));
-    return intDate;
-}
 
-bool save_database(std::vector<std::pair<int, double> > &data){
-    std::ifstream database;
-    std::string str;
-    database.open("data.csv");
-    if(database.rdstate())
-    {
-        std::cout << "database read failed.\n";
-        return 1;
-    }
 
-    bool firstLine = true;
-    char date[128]; 
-    char exchangeRate[128];
-    std::cout << str <<"\n";
-    
-    while(database.eof() == false){
-        std::getline(database, str, '\n');
-        if(database.eof())
-            break;
-        if(firstLine) {
-            firstLine = false; continue;
-        }
-        size_t pos = str.find(",", 0);
-        
-        if(pos != std::string::npos)//찾았다면
-        {
-            str.copy(date, pos, 0);
-            str.copy(exchangeRate, str.size() - 1 , pos+1);
-            std::string strDate = date;
-            int intDate = strDateToInt(strDate);
-            std::string strExchangeRate = exchangeRate;
-            
-            double dExchangeRate = strtod(strExchangeRate.c_str(), NULL);
-            data.push_back(std::pair<int, double>(intDate, dExchangeRate));
-        }
-        else
-        {
-            std::cout << "wrong database\n";
-            database.close();
-            return FAIL;
-        }
-    }
-    database.close();
-    std::cout << "finish reading database.\n";
-    return SUCCESS;
-}
 
-bool cmp(std::pair<int, double>  a, std::pair<int, double> b){
-    if(a.first < b.first)
-        return true;
-    return false;
-}
+
+
 
 
 int main(int argc, char **argv){
@@ -105,30 +47,27 @@ int main(int argc, char **argv){
         std::cout << "usage : ./btc [input filename]\n";
         return 1;
     }
+    
+    try
+    {
+        BitcoinExchange::loadData();
+        // BitcoinExchange::checkData();
 
-    //dataSaver
-    std::vector<std::pair<int, double> >  data;
-    if(save_database(data)){
-        std::cout << "reading database failed.\n";
+        std::string filename = argv[1];
+        // BitcoinExchange::parseInputDataAndPrintOutput(argv[1]);
+    }
+    catch(std::exception &e){
+        std::cout << e.what() << std::endl;
         return 1;
     }
-    sort(data.begin(), data.end(), cmp);
 
-
-    std::vector<std::pair<int, double> >::iterator  it;
+    // std::vector<std::pair<int, double> >::iterator  it;
     // 2012-11-03,10.62
-    it = std::upper_bound(data.begin(), data.end(), std::pair<int, double>(20121102, 0), cmp);
-    std::cout << (--it)->first << " " << it->second << "\n";
+    // it = std::upper_bound(data.begin(), data.end(), std::pair<int, double>(20121102, 0), cmp);
+    // std::cout << (--it)->first << " " << it->second << "\n";
     // for(it = data.begin(); it != data.end(); it++){
     //     std::cout << it->first << " " << it->second << "\n";
     // }
     // std::cout << data.size(); 
-    std::ifstream ifs;
-    std::string filename = argv[1];
-    ifs.open(filename);
-    if(ifs.rdstate()){
-        std::cout << "error: wrong file\n";
-        ifs.close();
-        return 1;
-    }
+    
 }
