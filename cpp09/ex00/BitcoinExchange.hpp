@@ -8,31 +8,21 @@
 #include <map>
 #include <vector>
 #include <cstdlib>
-#define FAIL 1
-#define SUCCESS 0
-#define VALID 0
-#define VALUENOTPOSITIVE 1
-#define VALUETOOLARGE 2
-#define BADINPUT 3
-
-typedef std::vector<std::pair<std::pair<int, double>, std::pair<int, int> > > DataForm;
-
+typedef std::map<std::string, double> Dataform;
 class BitcoinExchange
 {
 private:
+
+        DataForm Data;
+        DataForm inputData;
         BitcoinExchange();
         BitcoinExchange(const BitcoinExchange& copy);
         BitcoinExchange& operator=(const BitcoinExchange& copy);
         ~BitcoinExchange();
-
-        static DataForm  Data;
-        static DataForm inputData;
-        int errorbit;
 public:
-
         static bool cmp(std::pair<int, double>  a, std::pair<int, double> b);
-        static bool InvalidDateCheck(int month, int date);
-        static int strDateToInt(std::string strDate);
+        static bool InvalidDateCheck(int year, int month, int date);
+        static void dateValidate(std::string strDate);
         static void loadData();
         static void checkData();
         static void saveDatabaseAndCheckValid(DataForm &data, std::string filename, std::string delimeter);
@@ -54,8 +44,6 @@ public:
         class ValueNotPositive: public std::exception{
                 virtual const char *what(void) const throw();
         };
-
-
 
 };
 

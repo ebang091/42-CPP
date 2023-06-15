@@ -26,9 +26,8 @@ bool BitcoinExchange::cmp(std::pair<int, double>  a, std::pair<int, double> b){
     return false;
 }
 
-int BitcoinExchange::strDateToInt(std::string strDate){
+void BitcoinExchange::dateValidate(std::string strDate){
     int year, month, date;
-    
     
     // std::string check;
     // std::string ret;
@@ -47,13 +46,11 @@ int BitcoinExchange::strDateToInt(std::string strDate){
         integer = 0;
         while(*(it) != '-' && it != strDate.end())
         {
-            // std::cout << *it <<"\n";
             if(!isdigit(*it))
                 throw InvalidDateFailure();
             integer = integer * 10 + *it - '0';
             it++;
         }
-        // std::cout << integer << "\n";
         year = integer;
         integer = 0;
         it++;
@@ -75,7 +72,6 @@ int BitcoinExchange::strDateToInt(std::string strDate){
         }
         date = integer;
     }
-    // std::cout << year << " " << month <<  " " << date <<"\n";
 
 
 
@@ -99,9 +95,14 @@ int BitcoinExchange::strDateToInt(std::string strDate){
     int intDate = year * 10000 + month * 100 + date;
     if(1900 > year || year > 2023 || month > 12 || month < 1)
         throw InvalidDateFailure();
-    if(InvalidDateCheck(month, date))
-        throw InvalidDateFailure();
-    return intDate;
+    try {
+        InvalidDateCheck(year, month, date);
+        }
+    catch(std::exception &e){
+        throw e;
+    }
+        
+    return ;
 }
 
 void BitcoinExchange::saveDatabaseAndCheckValid(DataForm &data, std::string filename, std::string delimeter){
@@ -208,7 +209,7 @@ const char *BitcoinExchange::InvalidDateFailure::what() const throw ()
     return "not a valid date format.\n";
 }
 
-bool BitcoinExchange::InvalidDateCheck(int month, int date){
+bool BitcoinExchange::InvalidDateCheck(int year, int month, int date){
     switch(month){
         case 1:
         case 3:
@@ -217,10 +218,28 @@ bool BitcoinExchange::InvalidDateCheck(int month, int date){
         case 8:
         case 10:
         case 12:
-            if(date < 0 || date > 31)
-                return 1;
             break;
+            if (year % 400 == 0){
+                if (day > 29)
+                    throw InvalidDateFailure();
+            }
+            else if(year % 100 == 0){
+                if(day > 28)
+                    throw InvalidDateFailure();
+            }
+            else if(year % 4 == 0){
+                if(day > 29)
+                    throw InvalidDateFailure();
+            }
+            else{
+                if(day > 28)
+                    throw InputDataLoadFailure();
+            }
         case 2:
+            if(date < 0 || date > 30 )
+                return 1;
+            if (year )
+            
         case 4:
         case 6:
         case 9:

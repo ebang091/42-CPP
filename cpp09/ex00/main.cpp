@@ -47,7 +47,6 @@ int main(int argc, char **argv){
         std::cout << "usage : ./btc [input filename]\n";
         return 1;
     }
-    
     try
     {
         BitcoinExchange::loadData();
