@@ -1,46 +1,14 @@
 #include "BitcoinExchange.hpp"
 DataForm BitcoinExchange::Data = DataForm();
 DataForm BitcoinExchange::inputData = DataForm();
-BitcoinExchange::BitcoinExchange() {
-
-}
-
-BitcoinExchange::BitcoinExchange(const BitcoinExchange& copy) {
-    this->Data = copy.Data;
-}
-
-BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& copy){
-    if(this != &copy){
-        this->Data = copy.Data;
-    }
-    return *this;
-}
-
-BitcoinExchange::~BitcoinExchange(){
-    
-}
-
-bool BitcoinExchange::cmp(std::pair<int, double>  a, std::pair<int, double> b){
-    if(a.first < b.first)
-        return true;
-    return false;
-}
 
 void BitcoinExchange::dateValidate(std::string strDate){
-    int year, month, date;
-    
-    // std::string check;
-    // std::string ret;
-    // char *ptr;
-    //string YYYY-MM-DD 형태의 날짜를 int형으로 바꾸어 반환한다.
-    // .     0123456789
-
-    //TODO : -의 위치를 찾기 : 형식확인하기
+    long long  year, month, date;
 
     if(strDate[4] != '-' || strDate[7] != '-'){
         throw InvalidDateFailure();
     }
-    int integer;
+    long long integer;
     std::string::iterator it = strDate.begin();
     while(it != strDate.end()){
         integer = 0;
@@ -72,125 +40,223 @@ void BitcoinExchange::dateValidate(std::string strDate){
         }
         date = integer;
     }
-
-
-
-
-    // check.assign(strDate.c_str(), 0, 4);
-    // int year = std::strtod(check.c_str(), &ptr);
-    // if()
-    //     throw InvalidDateFailure();
-    // std::cout << year << "\n";
-    // // std::cout << year << " " << month << " " << date <<"\n";
-    // check.assign(strDate.c_str(), 5, 2);
-    // std::cout << check << "\n";
-    // int month = std::strtod(check.c_str(), &ptr);
-    // if(ptr != NULL)
-    //     throw InvalidDateFailure();
-    // std::cout << month << "\n";
-    // check.assign(strDate.c_str(), 8, 2);
-    // int date = std::strtod(check.c_str(), &ptr);
-    // if(ptr != NULL)
-    //     throw InvalidDateFailure();
-    int intDate = year * 10000 + month * 100 + date;
     if(1900 > year || year > 2023 || month > 12 || month < 1)
         throw InvalidDateFailure();
-    try {
-        InvalidDateCheck(year, month, date);
-        }
-    catch(std::exception &e){
-        throw e;
-    }
-        
+    
+    MonthInvalidDateCheck(year, month, date);
     return ;
 }
 
-void BitcoinExchange::saveDatabaseAndCheckValid(DataForm &data, std::string filename, std::string delimeter){
-    std::ifstream database;
-    std::string str;
 
-    database.open(filename);
-    if(database.rdstate())
-    {
-        throw DataLoadFailure();
-    }
-    int isValidDate = VALID;
-    int isValidValue = true;
-    bool firstLine = true;
+std::pair<std::string, std::string> BitcoinExchange::parseOneLine(std::string str, std::string delimeter){
+    std::pair<std::string, std::string> temp;
     char date[128]; 
     char value[128];
-    int whiteSpaceNum;
-    // char *ptr;
+    int whiteSpaceNum = 0;
+
+    size_t pos = str.find(delimeter, 0);
+    if(pos != std::string::npos)
+    {
+        //date parser
+        for(whiteSpaceNum = 0; (0 <= (pos - whiteSpaceNum - 1) && (pos - whiteSpaceNum -1) < str.size()) && str[pos - whiteSpaceNum -1] == ' '; whiteSpaceNum++);
+        str.copy(date, pos - whiteSpaceNum, 0);
+        date[pos- whiteSpaceNum] = '\0';
+        std::string strDate = date;
+        //value parser
+        for(whiteSpaceNum = 0; (0 <= (pos + whiteSpaceNum + 1) && (pos + whiteSpaceNum + 1) < str.size()) && str[pos + whiteSpaceNum + 1] == ' '; whiteSpaceNum++);
+        str.copy(value, str.size() - pos - 1 - whiteSpaceNum , pos + whiteSpaceNum + 1);
+        value[str.size() - pos - 1 - whiteSpaceNum] = '\0';
+        std::string strValue = value;
+        temp.first = strDate;
+        temp.second = strValue;
+        return temp;
+    }
+    else{
+        throw InvalidInputFailure();
+    }
+}
+
+void BitcoinExchange::ParseAndSaveDatabase(DataForm &data, std::string filename, std::string delimeter){
+    std::ifstream database;
+    std::string str;
+    std::pair<std::string, std::string> temp;        
+
+    bool firstLine = true;
+    database.open(filename);
+    if(database.rdstate())
+        throw DataLoadFailure();
     while(database.eof() == false){
         std::getline(database, str, '\n');
         if(database.eof())
             break;
-        //첫째줄은 넘긴다. 
+        //첫째줄은 넘긴다.
         if(firstLine) {
             firstLine = false; continue;
         }
-        //일단 delimeter를 찾는다.
-        //자를 구간을 찾기 위해 공백인 만큼의 개수를 따로 센다.
-
-        //delimeter에서부터 공백의 개수를 센다.
-        //그 공백이후의 전체 문자열의 개수를 또 복사해서 값으로 만든다.
-        //
-        size_t pos = str.find(delimeter, 0);
-        if(pos != std::string::npos)//찾았다면
-        {
-            //date parser
-            for(whiteSpaceNum = 0; (0 <= (pos - whiteSpaceNum - 1) && (pos - whiteSpaceNum -1) < str.size()) && str[pos - whiteSpaceNum -1] == ' '; whiteSpaceNum++);
-            str.copy(date, pos - whiteSpaceNum, 0);
-            date[pos- whiteSpaceNum] = '\0';
-            std::string strDate = date;
-
-            //value parser
-            for(whiteSpaceNum = 0; (0 <= (pos + whiteSpaceNum + 1) && (pos + whiteSpaceNum + 1) < str.size()) && str[pos + whiteSpaceNum + 1] == ' '; whiteSpaceNum++);
-            str.copy(value, str.size() - pos - 1 - whiteSpaceNum , pos + whiteSpaceNum + 1);
-            value[str.size() - pos - 1 - whiteSpaceNum] = '\0';
-            int intDate;
-            //try 받아서 valid 체크하기
-            try{
-                intDate = strDateToInt(strDate);
-            }
-            catch(std::exception &e){
-                isValidValue = BADINPUT;
-            }
-            std::string strValue = value;
-            std::cout << strValue.c_str() << "\n";
-            std::cout << dValue <<"\n";
-            // if(ptr != NULL)
-            //     isValidValue = BADINPUT;
-            data.push_back(std::pair<std::pair<int, double>, std::pair<bool, bool> >(std::make_pair(std::make_pair(intDate, dValue), std::make_pair(isValidDate, isValidValue))));
+        try {
+            temp = parseOneLine(str, delimeter);
+            data.insert(std::make_pair(temp.first, temp.second));
         }
-        else
-        {
-            database.close();
-            throw DataLoadFailure();
+        catch(std::exception &e){
+            continue;
         }
     }
     database.close();
-    std::cout << "***finish reading database.***\n";
 }
 
 void BitcoinExchange::loadData(){
     std::cout << "***start loading data....***\n";
     try
     {
-        saveDatabaseAndCheckValid(Data, "data.csv", ",");
+        ParseAndSaveDatabase(Data, "data.csv", ",");
     }
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
         throw e;
     }
+    std::cout << "***finish loading data....***\n";
 }
 
 void BitcoinExchange::checkData(){
     DataForm::iterator it;
-    for(it = Data.begin(); it != Data.end(); it++){
-        std::cout << it->first.first << " " << it->first.second << " " << it->second.first << "\n";
+    for(it = inputData.begin(); it != inputData.end(); it++){
+        std::cout << it->first << " " << it->second << "\n";
     }
+}
+
+
+void  BitcoinExchange::MonthInvalidDateCheck(long long  year, long long month, long long date){
+    switch(month){
+        case 1:
+        case 3:
+        case 5:
+        case 7:
+        case 8:
+        case 10:
+        case 12:
+            if(date > 31)
+                throw InvalidDateFailure();
+            break;
+        case 2:
+            if (year % 400 == 0){
+                if (date > 29)
+                    throw InvalidDateFailure();
+            }
+            else if(year % 100 == 0){
+                if(date > 28)
+                    throw InvalidDateFailure();
+            }
+            else if(year % 4 == 0){
+                if(date > 29)
+                    throw InvalidDateFailure();
+            }
+            else{
+                if(date > 28)
+                    throw InvalidDateFailure();
+            }
+            break;
+        case 4:
+        case 6:
+        case 9:
+        case 11:
+            if(date < 0 || date > 30)
+                throw InvalidDateFailure();
+            break;
+    }
+    return;
+}
+
+void BitcoinExchange::parseInputDataAndPrintOutput(std::string filename){
+   
+    std::ifstream database;
+    std::string str;        
+    DataForm::iterator mit;
+    std::string strValue;
+    std::string strDate;
+
+    bool firstLine = true;
+    database.open(filename);
+    if (database.rdstate())
+        throw DataLoadFailure();
+    while (database.eof() == false){
+        std::getline(database, str, '\n');
+        //첫째줄은 넘긴다. 
+        if(firstLine) {
+            firstLine = false; continue;
+        }
+        try{
+            std::pair<std::string, std::string> temp = parseOneLine(str, "|");
+            strDate = temp.first;
+            strValue = temp.second;
+            // std::cout << "*1*" <<"\n";
+            dateValidate(strDate);
+            mit = Data.upper_bound(strDate);
+            if(mit == Data.begin())
+                throw InvalidDateTooEarly();
+            // std::cout << "*2*" <<"\n";
+            valueValidate(strValue);
+            // std::cout << "*3*" <<"\n";
+            if(database.eof())
+                break;
+    }
+    catch(std::exception &e){
+        std::cout << e.what();
+        continue;
+    }
+        std::setprecision(10);
+        std::cout << strDate << " => " << strValue << " = " << loadExchangeRateResult(strValue, --mit) << "\n";
+    }
+    database.close();
+}
+
+double BitcoinExchange::loadExchangeRateResult(std::string value, DataForm::iterator data){
+    double operand1 = std::strtod(value.c_str(), NULL);
+    double operand2 = std::strtod(data->second.c_str(), NULL);
+    return operand1 * operand2;
+}
+
+void BitcoinExchange::valueValidate(std::string value){
+
+    long long integer = 0;
+    long long deci = 0;
+    for(unsigned int i = 0; i < value.length(); i++){
+        long long num = 0;
+        while (isdigit(value[i])){
+            num = num * 10 + value[i] - '0';
+            i++;
+        }
+        integer = num;
+        if(value[i] == '.')
+        {
+            i++;
+            num = 0;
+            while(isdigit(value[i])){
+                num = num * 10 + value[i] - '0';
+                i++;
+            }
+            deci = num;
+            if(value[i] != '\0')
+                throw InvalidValueFailure();
+        }
+        else{
+            if(value[i] != '\0')
+                throw InvalidValueFailure();
+        }
+    }
+    // std::cout << "integer , deci : " << integer << " " << deci << "\n";
+    std::stringstream strInteger;
+    strInteger << integer;
+    std::stringstream strDeci;
+    strDeci << deci;
+    std::string resultValue = strInteger.str() + '.' + strDeci.str();
+    // std::cout << "result value : " << resultValue << "\n";
+    long long ret = std::strtoll(resultValue.c_str(), NULL, 10);
+    // std::cout << "ret : " << ret << "\n";
+    if(ret > 1000)
+        throw InvalidValueTooLarge();
+    if(ret < 0)    
+        throw InvalidValueNotPositive();
 }
 
 const char *BitcoinExchange::DataLoadFailure::what() const throw ()
@@ -209,62 +275,27 @@ const char *BitcoinExchange::InvalidDateFailure::what() const throw ()
     return "not a valid date format.\n";
 }
 
-bool BitcoinExchange::InvalidDateCheck(int year, int month, int date){
-    switch(month){
-        case 1:
-        case 3:
-        case 5:
-        case 7:
-        case 8:
-        case 10:
-        case 12:
-            break;
-            if (year % 400 == 0){
-                if (day > 29)
-                    throw InvalidDateFailure();
-            }
-            else if(year % 100 == 0){
-                if(day > 28)
-                    throw InvalidDateFailure();
-            }
-            else if(year % 4 == 0){
-                if(day > 29)
-                    throw InvalidDateFailure();
-            }
-            else{
-                if(day > 28)
-                    throw InputDataLoadFailure();
-            }
-        case 2:
-            if(date < 0 || date > 30 )
-                return 1;
-            if (year )
-            
-        case 4:
-        case 6:
-        case 9:
-        case 11:
-            if(date < 0 || date > 30)
-                return 1;
-            break;
-        default : 
-            return 1;
-    }
-    return 0;
+const char *BitcoinExchange::InvalidValueFailure::what() const throw ()
+{
+    return "wrong value.\n";
 }
 
-// void BitcoinExchange::parseInputDataAndPrintOutput(std::string filename){
-    
-//     try{
-//         saveDatabaseAndCheckValid(inputData, filename, "|");
+const char *BitcoinExchange::InvalidValueNotPositive::what() const throw ()
+{
+    return "not a positive number.\n";
+}
 
-//     }
-//     catch(std::exception &e){
-//         std::cout << e.what() ;
-//     }
+const char *BitcoinExchange::InvalidValueTooLarge::what() const throw ()
+{
+    return "too large a number.\n";
+}
 
-// }
+const char *BitcoinExchange::InvalidDateTooEarly::what() const throw ()
+{
+    return "date too early.\n";
+}
 
-// int BitcoinExchange::loadExchangeRate(int date){
-
-// }
+const char *BitcoinExchange::InvalidInputFailure::what() const throw ()
+{
+    return "bad input\n";
+}

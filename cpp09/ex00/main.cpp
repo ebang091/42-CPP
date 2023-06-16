@@ -50,9 +50,10 @@ int main(int argc, char **argv){
     try
     {
         BitcoinExchange::loadData();
-        // BitcoinExchange::checkData();
-
         std::string filename = argv[1];
+        // std::cout << "Filename : " << filename <<"\n";
+        BitcoinExchange::parseInputDataAndPrintOutput(filename);
+        // BitcoinExchange::checkData();
         // BitcoinExchange::parseInputDataAndPrintOutput(argv[1]);
     }
     catch(std::exception &e){
