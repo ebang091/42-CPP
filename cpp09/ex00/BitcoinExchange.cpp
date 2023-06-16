@@ -189,14 +189,11 @@ void BitcoinExchange::parseInputDataAndPrintOutput(std::string filename){
             std::pair<std::string, std::string> temp = parseOneLine(str, "|");
             strDate = temp.first;
             strValue = temp.second;
-            // std::cout << "*1*" <<"\n";
             dateValidate(strDate);
             mit = Data.upper_bound(strDate);
             if(mit == Data.begin())
                 throw InvalidDateTooEarly();
-            // std::cout << "*2*" <<"\n";
             valueValidate(strValue);
-            // std::cout << "*3*" <<"\n";
             if(database.eof())
                 break;
     }
