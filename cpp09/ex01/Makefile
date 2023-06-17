@@ -2,7 +2,7 @@ CC = c++
 CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
 SRCS = main.cpp RPN.cpp
 OBJS = $(SRCS:.cpp=.o)
-NAME = btc
+NAME = RPN
 
 all : $(NAME)
   
