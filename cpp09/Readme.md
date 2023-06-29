@@ -8,7 +8,7 @@
 6. When you do not know or understand something, do you have power to search and devote yourself to solve it?(ex02) <br>
 
 
-## I collected some knowledges to finish these subjects:
+## I collected some knowledges to finish this module: <br>
 1. std::string : [using std::string with member functions ](https://ebang.tistory.com/102) <br>
    
 3. iterators in c++ : [c++ iterators](https://ebang.tistory.com/101) <br>
