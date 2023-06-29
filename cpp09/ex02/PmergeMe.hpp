@@ -33,6 +33,10 @@ private:
         class WrongSortFailure: public std::exception{
                 virtual const char *what(void) const throw();
         };
+        class WrongExpression: public std::exception{
+                virtual const char *what(void) const throw();
+        };
+
 
 
         int jacobsthal(int n);

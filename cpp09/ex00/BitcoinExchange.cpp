@@ -194,8 +194,6 @@ void BitcoinExchange::parseInputDataAndPrintOutput(std::string filename){
             if(mit == Data.begin())
                 throw InvalidDateTooEarly();
             valueValidate(strValue);
-            if(database.eof())
-                break;
     }
     catch(std::exception &e){
         std::cout << e.what();
@@ -203,6 +201,8 @@ void BitcoinExchange::parseInputDataAndPrintOutput(std::string filename){
     }
         std::setprecision(10);
         std::cout << strDate << " => " << strValue << " = " << loadExchangeRateResult(strValue, --mit) << "\n";
+        if(database.eof())
+                break;
     }
     database.close();
 }

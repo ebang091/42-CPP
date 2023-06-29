@@ -235,3 +235,8 @@ const char *PmergeMe::WrongSortFailure::what() const throw ()
 {
     return "wrong sort\n";
 }
+
+const char *PmergeMe::WrongExpression::what() const throw ()
+{
+    return "wrong expression\n";
+}
