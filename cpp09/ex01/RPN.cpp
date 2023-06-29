@@ -13,7 +13,6 @@ long long RPN::parseAndCalculate(int count, char **str){
         {
             char token = expression[j];
             long long x = 0;
-            // std::cout << "token : " << token << "\n";
             if (token == ' ')
                 continue;
             if('0' <= token && token <= '9'){
