@@ -3,7 +3,7 @@
 1. Can you use STL library in C++?  <br>
    use [std::map](https://en.cppreference.com/w/cpp/container/map), [std::vector](https://en.cppreference.com/w/cpp/container/vector), [std::queue](https://en.cppreference.com/w/cpp/container/queue), [std::deque](https://en.cppreference.com/w/cpp/container/deque), and understand these containers and how it is implemented. <br>
 2. Can you parse inputs as you want? (ex00) <br>
-   (use internal database to calcuate the bitCoin exchange amout : multiply (exchange rate)<br>
+   (use internal database to calcuate the bitCoin exchange amount : by multipling (exchange rate)<br>
    ```
    $> ./btc
    Error: could not open file.
