@@ -1,7 +1,9 @@
 #include "Span.hpp"
 
+
 Span::Span(unsigned int N): max_len(N), isSorted(false)
 { 
+
 }
 
 Span::Span(const Span &copy): vec(copy.vec), max_len(copy.max_len), isSorted(false){
@@ -75,14 +77,6 @@ void Span::changeNum(unsigned int idx, int value){
 	if (idx >= vec.size())
 		throw std::runtime_error("Invalid index\n");
 	vec[idx] = value;
-}
-
-void Span::fill(std::vector<int>::iterator &begin, std::vector<int>::iterator &end, int value){
-	std::vector<int>::iterator it = begin;
-	while (it != end){
-		*it = value;
-		it++;
-	}
 }
 
 std::vector<int>::iterator Span::begin(){

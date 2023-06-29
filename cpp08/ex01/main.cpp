@@ -106,39 +106,20 @@ int main() {
 	}
 	{	
 		std::cout << "\n--------test5----------\n";
-		Span span(17);
-		for(unsigned int  i = 0; i < 17; i++)
-			span.addNumber(i+1);
-		std::vector<int>::iterator it = span.begin();
-		std::vector<int>::iterator ite = span.end();
-		while(it != ite){
-			std::cout << *it << " ";
-			it++;
+		std::vector<int> willBePushed;
+		for(int i = 0; i < 100; i++){
+			willBePushed.push_back(i + 1);
 		}
-		std::cout << std::endl;
-
-		fill(span.begin(), span.end(), 1);
-		it = span.begin();
-		ite = span.end();
-		while(it != ite){
-			std::cout << *it << " ";
-			it++;
+		Span span(100000);
+		span.insert(willBePushed.begin(), willBePushed.end());
+		for(unsigned int i = 0; i < span.size(); i++){
+			std::cout << span.getNum(i) << " ";
 		}
-		std::cout << std::endl;
+		std::cout << "\n";
+		
 	}
 
-	// std::cout << "\n------------------test6---------------\n";
-	// try{
-	// 	Span span(100000);
-	// 	for(int i = 0; i < 10000; i++){
-	// 		span.addNumber(i);
-	// 	}
-	// 	for(unsigned int i = 0 ; i < span.size(); i++)
-	// 		std::cout << span.getNum(i) << " ";
-	// }
-	// catch (std::runtime_error &e){
-	// 	std::cout << e.what() << std::endl;
-	// }
+
 
 	std::cout << "\n--------------------------------end of test-----------------------------------\n";
 	// atexit(check);
