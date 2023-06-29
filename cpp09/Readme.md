@@ -1,7 +1,7 @@
 # ✏️After finishing this module... <br>
 ## I can answer these questions below : <br>
 1. Can you use STL library in C++?  <br>
-   use std::map, std::vector, std::queue, std::deque, understand these containers and how it is implemented. <br>
+   use [std::map](https://en.cppreference.com/w/cpp/container/map), [std::vector](https://en.cppreference.com/w/cpp/container/vector), [std::queue](https://en.cppreference.com/w/cpp/container/queue), [std::deque](https://en.cppreference.com/w/cpp/container/deque), understand these containers and how it is implemented. <br>
 2. Can you parse inputs as you want? (ex00) <br>
    (use internal database to calcuate the bitCoin exchange amout : multiply (exchange rate)<br>
    ```
