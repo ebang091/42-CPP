@@ -1,11 +1,5 @@
 #include "PmergeMe.hpp"
-/*
-1. 중복 체크한다. 
-2. 쌍으로 나눈 후 정렬한다. 
-3. main Chain, pendingElements 나눈다.
-4. merge 한다 : PendingElements 에서 순서대로 mainChain의 위치에 삽입. 
-5. 마지막에 홀수 번째였다면 남은 element도 삽입해준다.
-*/
+
 PmergeMe::PmergeMe(): hasDuplicate(false), isLeft(false){
     std::cout << "PmergeMe created.\n";
 }
@@ -36,6 +30,8 @@ PmergeMe::~PmergeMe(){
 
 }
 
+
+// ----- key member functions ---- 
 void PmergeMe::sortCompare(char **str){
     //parse 후에 before print 한다. 
     try{
@@ -74,7 +70,11 @@ void PmergeMe::validCheckAndSaveARgs(char **str){
     }
 }
 
-
+void PmergeMe::makeAnswer(){
+    std::vector<long long> tmp(nums);
+    answer = tmp;
+    sort(answer.begin(), answer.end());
+}
 
 void PmergeMe::printBefore(){
 
@@ -90,11 +90,6 @@ void PmergeMe::printBefore(){
     
 }
 
-void PmergeMe::makeAnswer(){
-    std::vector<long long> tmp(nums);
-    answer = tmp;
-    sort(answer.begin(), answer.end());
-}
 
 int PmergeMe::jacob(int n){
 	if(n == 0 || n ==1)
@@ -104,49 +99,43 @@ int PmergeMe::jacob(int n){
 
 
 void PmergeMe::mergeInsertSortUsingVector(){
-    //처음 시간 재기
+    
     clock_t begin = clock();
+
+
     pairSort(vmainChain, vpendingElements);
- 
-    //mainChain에 pendingelements의 원소를 하나씩 삽입
     int insertSize = vpendingElements.size() % 2 == 1 ? vpendingElements.size() - 1: vpendingElements.size();
     std::vector<int> insertIndexes = jacobsthalNumbers(insertSize);
- 
-
-    std::cout << "\n";
     mergeUsingInsertUsingVector(insertIndexes);
 
-    std::cout << "\n";
-        
 
-    //마지막 시간 재기.
-    //정답 확인 후 걸린 시간 출력
     clock_t end = clock();
+
     checkCorrectSort(vmainChain);
+
     double duration = static_cast<double>(end) - static_cast<double>(begin);
     std::cout << "Time to process a range of " << nums.size() << " elments with std::vector : " << duration << "\n";
 
 }
 
 void PmergeMe::mergeInsertSortUsingDeque(){
-    //처음 시간 재기
+    
     clock_t begin = clock();
 
-    pairSort(dmainChain, dpendingElements);
 
-    //마지막 시간 재기.
-    //정답 확인 후 걸린 시간 출력
+    pairSort(dmainChain, dpendingElements);
     std::vector<int> insertIndexes = jacobsthalNumbers(vpendingElements.size());
     mergeUsingInsertUsingDeque(insertIndexes);
    
     clock_t end = clock();
+
     checkCorrectSort(dmainChain);
+    
     double duration = static_cast<double>(end) - static_cast<double>(begin);
     std::cout << "Time to process a range of " << nums.size() << " elments with std::deque: " << duration << "\n";
 }
 
 void PmergeMe::mergeUsingInsertUsingVector(std::vector<int>indexes){
-
 
     for(unsigned long i = 0; i < indexes.size(); i++){
         int cur = indexes[i] - 1;
@@ -176,20 +165,18 @@ void PmergeMe::mergeUsingInsertUsingDeque(std::vector<int>indexes){
 		else
 			dmainChain.insert(pos, dpendingElements[cur]);
     }
+    if(isLeft){
+        std::deque<long long >::iterator pos = std::upper_bound(dmainChain.begin(), dmainChain.end(), dpendingElements.back());
+        if (pos == dmainChain.end())
+			dmainChain.push_back(dpendingElements.back());
+		else
+			dmainChain.insert(pos, dpendingElements.back());
+    }
 
 }
 
 
-const char *PmergeMe::NotPositiveFailure::what() const throw ()
-{
-    return "there is a non-positive number.\n";
-}
-
-const char *PmergeMe::WrongSortFailure::what() const throw ()
-{
-    return "wrong sort\n";
-}
-
+// -- jacobsthal numbers---
 int PmergeMe::jacobsthal(int n){
 	if(n == 0 || n == 1){
         return n;
@@ -239,4 +226,15 @@ std::vector<int> PmergeMe::jacobsthalNumbers(int len){
         }
     }
     return indexes;
+}
+
+//---error handling---
+const char *PmergeMe::NotPositiveFailure::what() const throw ()
+{
+    return "there is a non-positive number.\n";
+}
+
+const char *PmergeMe::WrongSortFailure::what() const throw ()
+{
+    return "wrong sort\n";
 }

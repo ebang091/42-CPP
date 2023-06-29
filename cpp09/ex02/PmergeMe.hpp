@@ -15,12 +15,12 @@
 class PmergeMe {
 private:
         bool hasDuplicate;
-        std::vector<long long> nums;
-        std::vector<long long> answer;
-        std::set<long long> duplicateCheck;
-        std::vector<long long> vmainChain;
+        std::vector<long long> nums; //args 저장
+        std::vector<long long> answer; //정렬한 정답
+        std::set<long long> duplicateCheck; //중복 확인(에러핸들링은 따로 안함)
+        std::vector<long long> vmainChain;//vector용
         std::vector<long long> vpendingElements;
-        std::deque<long long> dmainChain;
+        std::deque<long long> dmainChain;//deque 용
         std::deque<long long> dpendingElements;
         long long leftBehind;
         bool isLeft;
@@ -37,7 +37,6 @@ private:
         int jacobsthal(int n);
         std::vector<int> jacobsthalNumbers(int len);
         int jacob(int n);
-        // void getJacobsthalNumber();
         void printBefore();
         void makeAnswer();
         void parse(char ** str); //int main에서 받아와서 파싱
@@ -46,11 +45,11 @@ private:
         void mergeInsertSortUsingVector();//vector 를 이용한.
         void mergeInsertSortUsingDeque();//deque 를 이용한 정렬.
 
-        void mergeUsingInsertUsingVector(std::vector<int>indexes);
-        void mergeUsingInsertUsingDeque(std::vector<int>indexes);
+        void mergeUsingInsertUsingVector(std::vector<int>indexes); //merge : vector 버전
+        void mergeUsingInsertUsingDeque(std::vector<int>indexes);//merge: deque 버전
 
-        template<typename T> void pairSort(T &mainChain, T& pendingElements);
-        template<typename T>void checkCorrectSort(T& arr);
+        template<typename T> void pairSort(T &mainChain, T& pendingElements); //처음 mainChain, pendingElements 로 나눔
+        template<typename T>void checkCorrectSort(T& arr);//sort 되었는지 answer와 비교
        
 
 public:
@@ -61,6 +60,7 @@ public:
         void sortCompare(char **str);
 
 };
+
 template<typename T> 
 void swap(T &a, T &b){
         T temp = a;
