@@ -241,15 +241,13 @@ void BitcoinExchange::valueValidate(std::string value){
                 throw InvalidValueFailure();
         }
     }
-    // std::cout << "integer , deci : " << integer << " " << deci << "\n";
     std::stringstream strInteger;
     strInteger << integer;
     std::stringstream strDeci;
     strDeci << deci;
     std::string resultValue = strInteger.str() + '.' + strDeci.str();
-    // std::cout << "result value : " << resultValue << "\n";
     long long ret = std::strtoll(resultValue.c_str(), NULL, 10);
-    // std::cout << "ret : " << ret << "\n";
+
     if(ret > 1000)
         throw InvalidValueTooLarge();
     if(ret < 0)    
