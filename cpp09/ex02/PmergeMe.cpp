@@ -54,17 +54,29 @@ void PmergeMe::parse(char **str){
 
 void PmergeMe::validCheckAndSaveARgs(char **str){
     //parse 함수에서 호출, duplicateCheck set 이용해서 중복확인, 범위 확인
+        //parse 함수에서 호출, duplicateCheck set 이용해서 중복확인, 범위 확인
     long long num = 0;
     int i = 1;
     while(str[i] != NULL){
-        std::stringstream ss(str[i]);
-        while(ss >> num){
-            if(num < 0)
-                throw NotPositiveFailure();
-            if(duplicateCheck.find(num) != duplicateCheck.end())
-                hasDuplicate = true;
-            nums.push_back(num);
-            duplicateCheck.insert(num);
+          
+    std::string expr = str[i];
+    unsigned long j = 0;
+    while(expr[j] != '\0'){
+        num = 0;
+        while(expr[j] != '\0' && isdigit(expr[j]))
+            num = num * 10 + expr[j++] - '0';
+        if(expr[j] != ' ' && j != expr.length())
+            throw WrongExpression();
+        if(num < 0)
+            throw NotPositiveFailure();
+        if(duplicateCheck.find(num) != duplicateCheck.end())
+            hasDuplicate = true;
+        
+        nums.push_back(num);
+        duplicateCheck.insert(num);
+        if (expr[j] == '\0')
+            break;
+            j++;
         }   
         i++;
     }
@@ -104,16 +116,15 @@ void PmergeMe::mergeInsertSortUsingVector(){
 
 
     pairSort(vmainChain, vpendingElements);
-    int insertSize = vpendingElements.size() % 2 == 1 ? vpendingElements.size() - 1: vpendingElements.size();
-    std::vector<int> insertIndexes = jacobsthalNumbers(insertSize);
+    std::vector<int> insertIndexes = jacobsthalNumbers(vpendingElements.size());
     mergeUsingInsertUsingVector(insertIndexes);
 
 
     clock_t end = clock();
-
     checkCorrectSort(vmainChain);
 
     double duration = static_cast<double>(end) - static_cast<double>(begin);
+    std::setprecision(10);
     std::cout << "Time to process a range of " << nums.size() << " elments with std::vector : " << duration << "\n";
 
 }
@@ -132,11 +143,13 @@ void PmergeMe::mergeInsertSortUsingDeque(){
     checkCorrectSort(dmainChain);
     
     double duration = static_cast<double>(end) - static_cast<double>(begin);
+    std::setprecision(10);
     std::cout << "Time to process a range of " << nums.size() << " elments with std::deque: " << duration << "\n";
 }
 
 void PmergeMe::mergeUsingInsertUsingVector(std::vector<int>indexes){
 
+    std::cout << "index size: " << indexes.size() << "\n";
     for(unsigned long i = 0; i < indexes.size(); i++){
         int cur = indexes[i] - 1;
 	    std::vector<long long >::iterator pos = std::upper_bound(vmainChain.begin(), vmainChain.end(), vpendingElements[cur]);
@@ -145,19 +158,11 @@ void PmergeMe::mergeUsingInsertUsingVector(std::vector<int>indexes){
 		else
 			vmainChain.insert(pos, vpendingElements[cur]);
     }		
-
-    if(isLeft){
-        std::vector<long long >::iterator pos = std::upper_bound(vmainChain.begin(), vmainChain.end(), vpendingElements.back());
-        if (pos == vmainChain.end())
-			vmainChain.push_back(vpendingElements.back());
-		else
-			vmainChain.insert(pos, vpendingElements.back());
-    }
-
 }
 
 void PmergeMe::mergeUsingInsertUsingDeque(std::vector<int>indexes){
     for(unsigned long i = 0; i < indexes.size(); i++){
+        
         int cur = indexes[i] -1;
 	    std::deque<long long>::iterator pos = std::upper_bound(dmainChain.begin(), dmainChain.end(), dpendingElements[cur]);
         if (pos == dmainChain.end())
@@ -165,14 +170,6 @@ void PmergeMe::mergeUsingInsertUsingDeque(std::vector<int>indexes){
 		else
 			dmainChain.insert(pos, dpendingElements[cur]);
     }
-    if(isLeft){
-        std::deque<long long >::iterator pos = std::upper_bound(dmainChain.begin(), dmainChain.end(), dpendingElements.back());
-        if (pos == dmainChain.end())
-			dmainChain.push_back(dpendingElements.back());
-		else
-			dmainChain.insert(pos, dpendingElements.back());
-    }
-
 }
 
 
@@ -199,8 +196,8 @@ std::vector<int> PmergeMe::jacobsthalNumbers(int len){
         if(idx > len)
             endFlag = true;
         jacobN.push(idx);
-    }
 
+    }  
     //after getting jacobsthal number, should make the indexes in a row:
     std::vector<int> indexes;
     std::set<int> usedIndexes;

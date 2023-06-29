@@ -10,6 +10,7 @@
 #include <deque>
 #include <queue>
 #include <map>
+#include <iomanip>
 
 
 class PmergeMe {
@@ -89,6 +90,17 @@ void PmergeMe::pairSort(T &mainChain, T& pendingElements){
                         }
                 }
         }
+        // std::cout << "mainchain\n";
+        // for(unsigned long i = 0; i < mainChain.size(); i++){
+        //         std::cout << mainChain[i] << " ";
+        // }
+        // std::cout << "\n";
+
+        // std::cout << "pending elements\n";
+        // for(unsigned long i = 0; i < pendingElements.size(); i++){
+        //         std::cout << pendingElements[i] << " ";
+        // }
+        // std::cout << "\n";
         if(isLeft)
                 pendingElements.push_back(leftBehind);
 
